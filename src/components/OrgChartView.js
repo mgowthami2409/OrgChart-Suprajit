@@ -79,9 +79,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     const getColorForStatus = (status) => {
       if (!status) return null;
       const s = String(status).toLowerCase();
-      if (s.includes("active")) return "#2ecc71"; // green
-      if (s.includes("notice")) return "#f1c40f"; // yellow
-      if (s.includes("vacant") || s.includes("vacency")) return "#e74c3c"; // red
+      if (s.includes("active") || s.includes("Active")) return "#1e4489"; 
+      if (s.includes("notice")) return "#bd2331"; 
+      if (s.includes("vacant") || s.includes("vacency")) return "#ef6724"; 
       return null;
     };
     try {

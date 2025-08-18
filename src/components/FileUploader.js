@@ -129,7 +129,7 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
         <button onClick={handleSubmit}>Submit</button>
         <button onClick={handleClear}>Clear</button>
         <br />
-        <label style={{ marginTop: 8 }}>Department (used in print):</label>
+        <label style={{ marginTop: 8 }}><b>Department Name: </b></label>
         <input type="text" onChange={e => setDepartment && setDepartment(e.target.value)} style={{ marginLeft: 6 }} />
         <br />
         <span className={`file-name ${error ? "error" : fileName ? "success" : ""}`}>

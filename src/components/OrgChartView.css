@@ -94,14 +94,14 @@
 
 /* Name text inside node */
 .orgchart .node .field_0 {
-  font-size: 16px !important;   /* increase font size */
+  font-size: 22px !important;   /* increase font size */
   font-weight: 600 !important;  /* bold */
   fill: black !important;       /* text color */
 }
 
 /* Title text inside node */
 .orgchart .node .field_1 {
-  font-size: 14px !important;   /* increase font size */
+  font-size: 18px !important;   /* increase font size */
   font-weight: 500 !important;
   fill: black !important;
 }
@@ -228,79 +228,34 @@
   pointer-events: none; /* ignore clicks */
 }
 
-/* Template-specific tweaks */
-.chart-container.template-ana .orgchart .node .field_0,
-.chart-container.template-ana .orgchart .node .field_1 {
-  fill: #000 !important; /* ensure black text for Ana */
-  font-weight: 600 !important; /* bold */
-}
-
-/* Mery: larger, crisper black text */
-.chart-container.template-mery .orgchart .node .field_0 {
+/* Name text inside node (field_0) */
+/* .orgchart .node text[field-id="field_0"],
+.orgchart .node .field_0 {
   font-size: 20px !important;
   font-weight: 700 !important;
-  fill: #000 !important;
-  -webkit-font-smoothing: antialiased !important;
-  text-rendering: geometricPrecision !important;
-}
-.chart-container.template-mery .orgchart .node .field_1 {
-  font-size: 16px !important;
-  fill: #000 !important;
+  fill: black !important;
 }
 
-/* Isla: ensure node border is black if the template supports border */
-.chart-container.template-isla .orgchart .node {
-  box-shadow: none !important;
-  border: 2px solid #000 !important;
+.orgchart .node text[field-id="field_1"],
+.orgchart .node .field_1 {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  fill: black !important;
+} */
+/* Force larger font size for all name fields */
+/* Match any text element with field-id attribute (works across templates) */
+.orgchart text[field-id] {
+  font-family: Arial, Helvetica, sans-serif !important;
 }
 
-/* More robust template-specific styles to cover several template DOM variants */
-/* Ana: make text black across possible node templates */
-.chart-container.template-ana .orgchart .node .field_0,
-.chart-container.template-ana .orgchart .node .field_1,
-.chart-container.template-ana .boc-node,
-.chart-container.template-ana .boc-node .boc-node-content,
-.chart-container.template-ana .boc-node-content,
-.chart-container.template-ana .node,
-.chart-container.template-ana .node text {
-  color: #000 !important;
-  fill: #000 !important;
-  stroke: none !important;
-  -webkit-font-smoothing: antialiased !important;
-  text-rendering: geometricPrecision !important;
-}
-
-/* Mery: larger, crisp black text */
-.chart-container.template-mery .orgchart .node .field_0,
-.chart-container.template-mery .boc-node .field_0,
-.chart-container.template-mery .node .field_0 {
-  font-size: 22px !important;
+/* Specifically boost name */
+.orgchart text[field-id="field_0"] {
+  font-size: 30px !important;
   font-weight: 700 !important;
-  fill: #000 !important;
-  color: #000 !important;
-  -webkit-font-smoothing: antialiased !important;
-  text-rendering: geometricPrecision !important;
 }
 
-.chart-container.template-mery .orgchart .node .field_1,
-.chart-container.template-mery .boc-node .field_1,
-.chart-container.template-mery .node .field_1 {
-  font-size: 16px !important;
-  fill: #000 !important;
+/* Specifically boost title */
+.orgchart text[field-id="field_1"] {
+  font-size: 22px !important;
+  font-weight: 600 !important;
 }
-
-/* Isla: force visible black borders on node wrappers and svg rects */
-.chart-container.template-isla .orgchart .node,
-.chart-container.template-isla .boc-node,
-.chart-container.template-isla .node {
-  border: 2px solid #000 !important;
-  box-shadow: none !important;
-}
-.chart-container.template-isla .orgchart .node rect,
-.chart-container.template-isla .boc-node rect,
-.chart-container.template-isla .node rect {
-  stroke: #000 !important;
-  stroke-width: 2 !important;
-  fill-opacity: 1 !important;
-}
-
