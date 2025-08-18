@@ -157,7 +157,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       pid: row["Parent ID"] || null,
       name: row[effectiveSelected.nameField] || '',
       title: row[effectiveSelected.titleField] || '',
-      img: row.Photo
+      // img: row.Photo
+      img: row.Photo ? `${window.location.origin}/photos/${row.Photo}` : '/placeholder.png'
+
     }));
     const chart = new OrgChart(chartContainerRef.current, {
       nodes,
@@ -239,17 +241,30 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // };
 
   const handleExportImage = async () => {
-    if (!exportRef.current) return;
+    if (!chartContainerRef.current) return;
 
-    const canvas = await html2canvas(exportRef.current, { scale: 2, backgroundColor: '#fff' });
+    // ✅ Preload all images in the chart
+    const imgs = chartContainerRef.current.querySelectorAll('img');
+    await Promise.all(
+      Array.from(imgs).map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(res => { img.onload = img.onerror = res; });
+      })
+    );
+
+    // Now capture the chart as an image
+    const canvas = await html2canvas(chartContainerRef.current, { 
+      scale: 2, 
+      backgroundColor: '#ffffff', // optional: ensures white background
+      useCORS: true // optional: helps with cross-origin images
+    });
+
     const imgData = canvas.toDataURL('image/png');
-
     const link = document.createElement('a');
     link.href = imgData;
     link.download = 'orgchart.png';
     link.click();
   };
-
 
   // note: selectedTemplate is included in the effect deps so changing it will recreate the chart
   const handleRefresh = () => {
