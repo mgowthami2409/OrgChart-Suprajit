@@ -157,8 +157,8 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       pid: row["Parent ID"] || null,
       name: row[effectiveSelected.nameField] || '',
       title: row[effectiveSelected.titleField] || '',
-      // img: row.Photo
-      img: row.Photo ? `${window.location.origin}/photos/${row.Photo}` : '/placeholder.png'
+      img: row.Photo
+      // img: row.Photo ? `${window.location.origin}/photos/${row.Photo}` : '/placeholder.png'
 
     }));
     const chart = new OrgChart(chartContainerRef.current, {
@@ -243,20 +243,19 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   const handleExportImage = async () => {
     if (!chartContainerRef.current) return;
 
-    // ✅ Preload all images in the chart
+    // preload images with decode
     const imgs = chartContainerRef.current.querySelectorAll('img');
     await Promise.all(
       Array.from(imgs).map(img => {
-        if (img.complete) return Promise.resolve();
+        if (img.complete) return img.decode?.().catch(() => {});
         return new Promise(res => { img.onload = img.onerror = res; });
       })
     );
 
-    // Now capture the chart as an image
-    const canvas = await html2canvas(chartContainerRef.current, { 
-      scale: 2, 
-      backgroundColor: '#ffffff', // optional: ensures white background
-      useCORS: true // optional: helps with cross-origin images
+    const canvas = await html2canvas(chartContainerRef.current, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+      useCORS: true
     });
 
     const imgData = canvas.toDataURL('image/png');
