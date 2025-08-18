@@ -81,6 +81,10 @@
   background-color: #0099ff;
 }
 
+.orgchart-view .top-bar .export-img {
+  background-color: #ff9800;
+}
+
 /* Chart */
 .orgchart-view .chart-container {
   width: 100%;
@@ -182,7 +186,7 @@
     top: 12px !important;
     right: 12px !important;
     font-size: 12px !important;
-    color: #000 !important;
+    color: #1e4489 !important;
     background: transparent !important;
   }
 
@@ -258,4 +262,35 @@
 .orgchart text[field-id="field_1"] {
   font-size: 22px !important;
   font-weight: 600 !important;
+}
+
+/* Chart container background */
+.orgchart-view .chart-container {
+  background: white; /* already present */
+}
+
+/* Node background & text colors */
+.orgchart .node,
+.orgchart .node .boc-node,
+.orgchart .node .boc-node-content,
+.orgchart .node .boc-node-inner {
+  background-color: white !important;
+  color: black !important;
+  border-color: black !important;
+}
+
+/* Name text inside node */
+.orgchart text[field-id="field_0"] {
+  fill: black !important;
+  font-size: 30px !important;
+  font-weight: 700 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+/* Title text inside node */
+.orgchart text[field-id="field_1"] {
+  fill: black !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
 }

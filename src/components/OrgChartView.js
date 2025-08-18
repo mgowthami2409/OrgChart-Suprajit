@@ -2,9 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import OrgChart from "@balkangraph/orgchart.js";
 import Controls from "./Controls";
 import "./OrgChartView.css";
+import html2canvas from 'html2canvas';
+// import jsPDF from 'jspdf';
+
 function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee, onBackToUpload, headers = [], selectedFields = { nameField: 'First_Name', titleField: 'Designation' }, setSelectedFields, department = '' }) {
   const chartContainerRef = useRef(null);
   const chartInstanceRef = useRef(null);
+  const exportRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
   // Template selection state: keep only the requested templates
   const templates = [
@@ -222,6 +226,31 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   setTimeout(() => { colorNodes(chart, data); addStatusBadges(chart, data); }, 300);
     return () => chart.destroy();
   }, [data, originalData, setSelectedEmployee, selectedTemplate, effectiveSelected.nameField, effectiveSelected.titleField, department, headers]);
+
+  // const handleExportPDF = async () => {
+  //   if (!chartContainerRef.current) return;
+
+  //   const canvas = await html2canvas(chartContainerRef.current, { scale: 2 });
+  //   const imgData = canvas.toDataURL('image/png');
+
+  //   const pdf = new jsPDF('l', 'pt', [canvas.width, canvas.height]);
+  //   pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+  //   pdf.save('orgchart.pdf');
+  // };
+
+  const handleExportImage = async () => {
+    if (!exportRef.current) return;
+
+    const canvas = await html2canvas(exportRef.current, { scale: 2, backgroundColor: '#fff' });
+    const imgData = canvas.toDataURL('image/png');
+
+    const link = document.createElement('a');
+    link.href = imgData;
+    link.download = 'orgchart.png';
+    link.click();
+  };
+
+
   // note: selectedTemplate is included in the effect deps so changing it will recreate the chart
   const handleRefresh = () => {
     setDisplayData(originalData);
@@ -301,6 +330,8 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
           templates={templates}
           onSelectTemplate={setSelectedTemplate}
           selectedTemplate={selectedTemplate}
+          // onExportPDF={handleExportPDF}     
+          onExportImage={handleExportImage}
         />
         <div className="orgchart-container">
           <div className="field-selectors" style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '6px 8px' }}>
@@ -313,9 +344,12 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
               {(headers || []).map(h => <option key={h} value={h}>{h}</option>)}
             </select>
           </div>
-          <div className={`chart-container template-${selectedTemplate}`} id="orgChart" ref={chartContainerRef}></div>
-          {/* print-only department label (rendered only in print via CSS) */}
-          <div className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</div>
+          <div className="print-label" ref={exportRef}>
+              <div className={`chart-container template-${selectedTemplate}`} id="orgChart" ref={chartContainerRef}></div>
+              {/* print-only department label (rendered only in print via CSS) */}
+              <div className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</div>
+          </div>
+         
         </div>
       </div>
     </>
