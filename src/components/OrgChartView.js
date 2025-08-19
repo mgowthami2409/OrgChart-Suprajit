@@ -360,7 +360,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     texts.forEach(node => {
       node.style.fill = "#000";
       node.style.fontWeight = "600";
-      node.style.fontFamily = "Arial, Helvetica, sans-serif";
+      node.style.fontFamily = "Aptos, Calibri, sans-serif";
     });
 
     // ✅ Capture with html2canvas
