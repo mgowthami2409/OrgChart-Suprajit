@@ -383,7 +383,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     // ✅ Inline critical styles (fixes "faded" text/colors in Netlify)
     const texts = chartContainerRef.current.querySelectorAll("text");
     texts.forEach(node => {
-      node.style.fill = "#000";
+      // node.style.fill = "#000";
       node.style.fontWeight = "600";
       node.style.fontFamily = "Aptos, Calibri, sans-serif";
     });
