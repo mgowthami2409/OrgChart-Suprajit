@@ -1,4 +1,3 @@
-
 import React from "react";
 function Controls({ searchQuery, setSearchQuery, onRefresh, onBack, onPrint, onExportImage, templates = [], onSelectTemplate, selectedTemplate }) {
    return (

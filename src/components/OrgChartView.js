@@ -174,15 +174,15 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // Disable the library's built-in details/edit UI on node click so
   // we don't get the right-side details panel. We use our own
   // click handler (chart.on("click", ...)) to show the popup.
-  nodeMouseClick: OrgChart.none,
-  nodeMouseDbClick: OrgChart.none,
+      nodeMouseClick: OrgChart.none,
+      nodeMouseDbClick: OrgChart.none,
       enableSearch: false,
       spacing: 100,
       levelSeparation: 100,
-  nodeMenu: null,
+      nodeMenu: null,
   // provide a safe, read-only editForm object so the library
   // doesn't try to access properties on `null` and crash.
-  editForm: { readOnly: true },
+      editForm: { readOnly: true },
       collapse: { level: 9999 }
     });
     // Defensive: some versions of @balkangraph/orgchart.js try to open
@@ -252,12 +252,18 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       })
     );
 
+    html2canvas(chartContainerRef.current, {
+      backgroundColor: "#ffffff", // solid background (prevents light export)
+      scale: 2,                   // higher resolution
+      useCORS: true,              // fixes image loading in Netlify
+    })
+
     const canvas = await html2canvas(chartContainerRef.current, {
       scale: 2,
       backgroundColor: '#ffffff',
       useCORS: true
     });
-
+    
     const imgData = canvas.toDataURL('image/png');
     const link = document.createElement('a');
     link.href = imgData;
