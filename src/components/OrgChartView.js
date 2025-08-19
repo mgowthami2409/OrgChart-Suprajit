@@ -243,31 +243,35 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   const handleExportImage = async () => {
     if (!chartContainerRef.current) return;
 
-    // preload images with decode
-    const imgs = chartContainerRef.current.querySelectorAll('img');
+    // ✅ Ensure all images are loaded
+    const imgs = chartContainerRef.current.querySelectorAll("img");
     await Promise.all(
       Array.from(imgs).map(img => {
-        if (img.complete) return img.decode?.().catch(() => {});
+        if (img.complete) return Promise.resolve();
         return new Promise(res => { img.onload = img.onerror = res; });
       })
     );
 
-    html2canvas(chartContainerRef.current, {
-      backgroundColor: "#ffffff", // solid background (prevents light export)
-      scale: 2,                   // higher resolution
-      useCORS: true,              // fixes image loading in Netlify
-    })
-
-    const canvas = await html2canvas(chartContainerRef.current, {
-      scale: 2,
-      backgroundColor: '#ffffff',
-      useCORS: true
+    // ✅ Inline critical styles (fixes "faded" text/colors in Netlify)
+    const texts = chartContainerRef.current.querySelectorAll("text");
+    texts.forEach(node => {
+      node.style.fill = "#000";
+      node.style.fontWeight = "600";
+      node.style.fontFamily = "Arial, Helvetica, sans-serif";
     });
-    
-    const imgData = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
+
+    // ✅ Capture with html2canvas
+    const canvas = await html2canvas(chartContainerRef.current, {
+      scale: 2,                  // high resolution
+      backgroundColor: "#ffffff", // force solid white background
+      useCORS: true               // allow cross-origin images
+    });
+
+    // ✅ Download the image
+    const imgData = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
     link.href = imgData;
-    link.download = 'orgchart.png';
+    link.download = "orgchart.png";
     link.click();
   };
 
@@ -338,6 +342,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       <div className="print-header" style={{ display: "none" }}>
         <img src="/onlylogo.png" alt="Logo" />
         <h1>Suprajit</h1>
+        <span className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</span>
       </div>
       <div className="orgchart-view">
         <header className="header">SUPRAJIT ENGINEERING LIMITED</header>
@@ -367,7 +372,6 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
           <div className="print-label" ref={exportRef}>
               <div className={`chart-container template-${selectedTemplate}`} id="orgChart" ref={chartContainerRef}></div>
               {/* print-only department label (rendered only in print via CSS) */}
-              <div className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</div>
           </div>
          
         </div>
