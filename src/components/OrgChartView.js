@@ -167,6 +167,11 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.ana);
     // Set node size (optional)
     OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.ana.node =
+      '<rect x="0" y="0" height="{h}" width="{w}" rx="10" ry="10" fill="#fff" stroke="#000" stroke-width="2px"></rect>';
+
+    OrgChart.templates.ana.size = [250, 140];
+
     OrgChart.templates.ana.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -174,13 +179,25 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.ana.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.ana.field_0 = 
+    '<foreignObject x="5" y="15" width="240" height="80">' +
+    '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 28px; color: #fff; font-weight: bold; text-align:center; line-height: 1.1;">{val}</div>' +
+    '</foreignObject>';
+
+  OrgChart.templates.ana.field_1 = 
+    '<foreignObject x="5" y="75" width="240" height="55">' +
+    '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 24px; color: #fff; text-align:center; line-height: 1.1;">{val}</div>' +
+    '</foreignObject>';
 
     OrgChart.templates.ana.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
     //Olivia
     OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
     // Set node size (optional)
-    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.dynamic.size = [350, 240];
+    OrgChart.templates.olivia.node =
+      '<rect x="0" y="0" height="{h}" width="{w}" rx="10" ry="10" stroke-width="2px"></rect>';
+    OrgChart.templates.olivia.size = [270, 150];
     OrgChart.templates.olivia.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -189,7 +206,15 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.olivia.link = 
-    '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+    '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />';
+    OrgChart.templates.olivia.field_0 = 
+      '<foreignObject x="50" y="15" width="240" height="80">' +
+      '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 28px; color: #ffff; font-weight: bold; text-align:center;">{val}</div>' +
+      '</foreignObject>';
+    OrgChart.templates.olivia.field_1 = 
+      '<foreignObject x="50" y="75" width="240" height="55">' +
+      '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 24px; color: #ffff; text-align:center;">{val}</div>' +
+      '</foreignObject>'; 
 
     //Belinda
     OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.belinda);
