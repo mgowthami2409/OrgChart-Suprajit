@@ -147,13 +147,15 @@
     font-size: 20px;
     font-weight: bold;
     color: #1e4489 !important;
-    margin: 0;
+    font-family: 'Aptos', Calibri, sans-serif;
+    margin-top: 5px;
   }
   
   .print-header .print-department {
     margin: auto !important;
     font-size: 20px;
     font-weight: bold;
+    font-family: 'Aptos', Calibri, sans-serif;
     color: #1e4489 !important;
   }
 
@@ -173,7 +175,7 @@
 
   /* Keep chart clean */
   .orgchart-container {
-    margin-top: 10px !important;
+    /* margin-top: 10px !important; */
     background: #fff !important;
     padding: 0 !important;
     height: auto !important;
@@ -190,27 +192,6 @@
     shape-rendering: crispEdges; /* Prevent blur in print */
   }
 }
-
-
-
-/* Print-specific department styling (visible only in print) */
-
-/* @media print {
-  .print-department {
-    display: block !important;
-    position: fixed !important;
-    top: 22px !important;
-    left: 50% !important; 
-    transform: translateX(-50%) !important;
-    font-size: 20px !important; 
-    font-weight: bold !important;
-    color: darkblue !important;
-    font-family: Arial, Helvetica, sans-serif !important;
-    z-index: 99999 !important;
-    background: transparent !important;
-    border: none !important;
-  }
-} */
 
 /* Small status badge placed in node top-right */
 .orgchart .node .status-badge {

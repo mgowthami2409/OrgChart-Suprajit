@@ -161,6 +161,120 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       // img: row.Photo ? `${window.location.origin}/photos/${row.Photo}` : '/placeholder.png'
 
     }));
+
+    // Ana Style
+
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.ana);
+    // Set node size (optional)
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.ana.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.ana.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+
+    OrgChart.templates.ana.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    //Olivia
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
+    // Set node size (optional)
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.olivia.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.olivia.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.olivia.link = 
+    '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    //Belinda
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.belinda);
+    // Set node size (optional)
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.belinda.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.belinda.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.belinda.link = 
+    '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    //Rony
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.rony);
+    // Set node size (optional)
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.rony.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.rony.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.rony.link = 
+    '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    //Mery
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.mery);
+    // Set node size (optional)
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.mery.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.mery.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.mery.link = 
+    '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    //Polina
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.polina);
+    // Set node size (optional)
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.polina.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.polina.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.polina.link = 
+    '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Diva
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.diva);
+    // Set node size (optional)
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.diva.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.diva.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.diva.link = 
+    '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Isla
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.isla);
+    // Set node size (optional)
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.isla.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.isla.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.isla.link = 
+    '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
     const chart = new OrgChart(chartContainerRef.current, {
       nodes,
       nodeBinding: {
@@ -228,17 +342,6 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   setTimeout(() => { colorNodes(chart, data); addStatusBadges(chart, data); }, 300);
     return () => chart.destroy();
   }, [data, originalData, setSelectedEmployee, selectedTemplate, effectiveSelected.nameField, effectiveSelected.titleField, department, headers]);
-
-  // const handleExportPDF = async () => {
-  //   if (!chartContainerRef.current) return;
-
-  //   const canvas = await html2canvas(chartContainerRef.current, { scale: 2 });
-  //   const imgData = canvas.toDataURL('image/png');
-
-  //   const pdf = new jsPDF('l', 'pt', [canvas.width, canvas.height]);
-  //   pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-  //   pdf.save('orgchart.pdf');
-  // };
 
   const handleExportImage = async () => {
     if (!chartContainerRef.current) return;
