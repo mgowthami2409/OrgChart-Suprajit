@@ -60,7 +60,7 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
 
       // Validate presence of mandatory field: Name (Photo can be uploaded per-node later)
       const headersLower = headerRow.map(h => String(h).toLowerCase());
-      const possibleNameKeys = ['first_name','first name','name','full_name','fullname','employee name','employee_name'];
+      const possibleNameKeys = ['first_name','first name','name','full_name','fullname','employee name','employee_name','name'];
 
       const hasName = headersLower.some(h => possibleNameKeys.includes(h));
 
