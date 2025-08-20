@@ -168,6 +168,103 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
 
   if (!data || data.length === 0 || !chartContainerRef.current) return;
   const nodes = data.map(row => mapRowToNode(row));
+
+    // Ana Style
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.ana);
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.ana.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.ana.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.ana.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Olivia Style
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.olivia.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.olivia.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.olivia.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Belinda Style
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.belinda);
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.belinda.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.belinda.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.belinda.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Rony Style
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.rony);
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.rony.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.rony.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.rony.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+  
+    // Mery Style
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.mery);
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.mery.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.mery.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.mery.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Polina Style
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.polina);
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.polina.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.polina.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.polina.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Diva Style
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.diva);
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.diva.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.diva.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.diva.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Isla Style
+    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.isla);
+    OrgChart.templates.dynamic.size = [320, 240];
+    OrgChart.templates.isla.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.isla.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.isla.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
     const chart = new OrgChart(chartContainerRef.current, {
       nodes,
       nodeBinding: {
@@ -175,29 +272,18 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
         field_1: "title",
         img_0: "img"
       },
-  scaleInitial: OrgChart.match.boundary,
-  template: selectedTemplate,
-  layout: OrgChart.mixed,
-  // Disable the library's built-in details/edit UI on node click so
-  // we don't get the right-side details panel. We use our own
-  // click handler (chart.on("click", ...)) to show the popup.
+      scaleInitial: OrgChart.match.boundary,
+      template: selectedTemplate,
+      layout: OrgChart.mixed,
       nodeMouseClick: OrgChart.none,
       nodeMouseDbClick: OrgChart.none,
       enableSearch: false,
       spacing: 100,
       levelSeparation: 100,
       nodeMenu: null,
-  // provide a safe, read-only editForm object so the library
-  // doesn't try to access properties on `null` and crash.
       editForm: { readOnly: true },
       collapse: { level: 9999 }
     });
-    // Defensive: some versions of @balkangraph/orgchart.js try to open
-    // an edit UI when a node is clicked and assume editUI.content is an
-    // element (not null). In some runtime situations that value is null
-    // which causes "Cannot read properties of null (reading 'readOnly')".
-    // Patch the instance with a safe stub so the library's edit UI calls
-    // won't crash the app. This keeps the chart read-only in our UI.
     try {
       if (!chart.editUI) chart.editUI = {};
       // ensure content is an object (not null) so property reads are safe
@@ -235,18 +321,6 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   setTimeout(() => { colorNodes(chart, data); addStatusBadges(chart, data); }, 300);
     return () => chart.destroy();
   }, [data, originalData, setSelectedEmployee, selectedTemplate, effectiveSelected.nameField, effectiveSelected.extras, department, headers, mapRowToNode]);
-
-  // const handleExportPDF = async () => {
-  //   if (!chartContainerRef.current) return;
-
-  //   const canvas = await html2canvas(chartContainerRef.current, { scale: 2 });
-  //   const imgData = canvas.toDataURL('image/png');
-
-  //   const pdf = new jsPDF('l', 'pt', [canvas.width, canvas.height]);
-  //   pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-  //   pdf.save('orgchart.pdf');
-  // };
-
   const handleExportImage = async () => {
     if (!chartContainerRef.current) return;
 
@@ -389,6 +463,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       <div className="print-header" style={{ display: "none" }}>
         <img src="/onlylogo.png" alt="Logo" />
         <h1>Suprajit</h1>
+        <span className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</span>
       </div>
       <div className="orgchart-view">
         <header className="header">SUPRAJIT ENGINEERING LIMITED</header>
@@ -428,10 +503,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
           </div>
           <div className="print-label" ref={exportRef}>
               <div className={`chart-container template-${selectedTemplate}`} id="orgChart" ref={chartContainerRef}></div>
-              {/* print-only department label (rendered only in print via CSS) */}
-              <div className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</div>
-          </div>
-         
+          </div>        
         </div>
       </div>
     </>
