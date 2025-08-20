@@ -498,7 +498,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
                     </label>
                   );
                 })}
-              <small style={{ color: '#666' }}></small>
+              <span style={{ color: '#666' }}></span>
             </div>
           </div>
           <div className="print-label" ref={exportRef}>
