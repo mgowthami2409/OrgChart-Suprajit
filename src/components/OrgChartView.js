@@ -480,11 +480,13 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
           onExportImage={handleExportImage}
         />
         <div className="orgchart-container">
-          <div className="field-selectors" style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '6px 8px' }}>
-            <label style={{ marginRight: 6 }}>Required: Name (Photo upload per node)</label>
-            <span style={{ color: '#666', marginRight: 12 }}>Name is mandatory. You can upload or set Photo for each node in the details popup.</span>
+          <div className="field-selectors" style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '0px 8px' }}>
+            <label style={{ marginRight: 6 }}></label>
+            <span style={{ color: 'black', marginRight: 12 }}>Name is mandatory, You can upload or set Photo for each node in the details popup.<br/>
+              Click on a person to open the popup then click '+' icon to upload Photo of a person
+            </span>
 
-            <label style={{ marginRight: 6 }}>Select up to 2 additional fields to show:</label>
+            <label style={{ marginRight: 6, marginLeft: 6 }}>Select up to 2 additional fields to show:</label>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 120, overflow: 'auto', padding: 6, border: '1px solid #ddd', borderRadius: 4 }}>
               {/* render headers as checkboxes; exclude Photo/Designation/Name */}
               {(headers || [])
