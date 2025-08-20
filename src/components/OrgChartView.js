@@ -98,9 +98,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     const getColorForStatus = (status) => {
       if (!status) return null;
       const s = String(status).toLowerCase();
-      if (s.includes("active")) return "#2ecc71"; // green
-      if (s.includes("notice")) return "#f1c40f"; // yellow
-      if (s.includes("vacant") || s.includes("vacency")) return "#e74c3c"; // red
+      if (s.includes("active")) return "#1e4489"; 
+      if (s.includes("notice")) return "#bd2331"; 
+      if (s.includes("vacant") || s.includes("vacency")) return "#e74c3c";
       return null;
     };
     try {
@@ -463,7 +463,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       <div className="print-header" style={{ display: "none" }}>
         <img src="/onlylogo.png" alt="Logo" />
         <h1>Suprajit</h1>
-        <span className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</span>
+        <span className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</span>g
       </div>
       <div className="orgchart-view">
         <header className="header">SUPRAJIT ENGINEERING LIMITED</header>
@@ -498,7 +498,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
                     </label>
                   );
                 })}
-              <small style={{ color: '#666' }}>You may select up to 2 fields; selections update node titles immediately.</small>
+              <small style={{ color: '#666' }}></small>
             </div>
           </div>
           <div className="print-label" ref={exportRef}>
