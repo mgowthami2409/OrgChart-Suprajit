@@ -453,7 +453,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       <div className="print-header" style={{ display: "none" }}>
         <img src="/onlylogo.png" alt="Logo" />
         <h1>Suprajit</h1>
-        <span className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</span>g
+        <span className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</span>
       </div>
       <div className="orgchart-view">
         <header className="header">SUPRAJIT ENGINEERING LIMITED</header>
