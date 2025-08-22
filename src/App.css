@@ -36,9 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-body, .orgchart text {
-  font-family: Aptos, Calibri, sans-serif !important;
-  color: #000 !important;
-  font-weight: 600 !important;
-}
