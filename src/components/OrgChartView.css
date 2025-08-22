@@ -215,7 +215,7 @@
   }
 
    #orgChart .node text {
-    font-size: 20pt !important;  /* smaller, but readable */
+    font-size: 22pt !important;  /* smaller, but readable */
   } 
 
   /* Main name field (field_0) – largest */
