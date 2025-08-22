@@ -7,6 +7,7 @@ import html2canvas from 'html2canvas';
 
 function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee, onBackToUpload, headers = [], selectedFields = { nameField: 'First_Name', titleField: 'Designation' }, setSelectedFields, department = '' }) {
   const chartContainerRef = useRef(null);
+  const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const exportRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -38,7 +39,8 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       pid: row["Parent ID"] || null,
       name: row[nameKey] || '',
       title: extraParts.join(' - '),
-      img: row.Photo
+      img: row.Photo,
+      status: row.Status || row.status || ''
     };
   }, [effectiveSelected.nameField, effectiveSelected.extras]);
 
@@ -46,12 +48,12 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   const colorNodes = (chartObj, rows) => {
     if (!chartObj || !rows || !Array.isArray(rows)) return;
     const getColorForStatus = (status) => {
-      if (!status) return null;
+      if (!status) return "e0e0e0";
       const s = String(status).toLowerCase();
       if (s.includes("active")) return "#1e4489"; 
       if (s.includes("notice")) return "#bd2331"; 
       if (s.includes("vacant") || s.includes("vacency")) return "#ef6724"; 
-      return null; // leave default
+      return "#e0e0e0"; // leave default
     };
     try {
       for (const r of rows) {
@@ -170,8 +172,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   const nodes = data.map(row => mapRowToNode(row));
 
     // Ana Style
-    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.ana);
-    OrgChart.templates.dynamic.size = [320, 240];
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.ana);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.ana.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -182,8 +185,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.ana.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
     // Olivia Style
-    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
-    OrgChart.templates.dynamic.size = [320, 240];
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.olivia.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -194,8 +198,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.olivia.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
     // Belinda Style
-    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.belinda);
-    OrgChart.templates.dynamic.size = [320, 240];
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.belinda);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.belinda.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -206,8 +211,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.belinda.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
     // Rony Style
-    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.rony);
-    OrgChart.templates.dynamic.size = [320, 240];
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.rony);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.rony.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -218,8 +224,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.rony.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
   
     // Mery Style
-    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.mery);
-    OrgChart.templates.dynamic.size = [320, 240];
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.mery);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.mery.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -230,8 +237,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.mery.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
     // Polina Style
-    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.polina);
-    OrgChart.templates.dynamic.size = [320, 240];
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.polina);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.polina.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -242,8 +250,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.polina.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
     // Diva Style
-    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.diva);
-    OrgChart.templates.dynamic.size = [320, 240];
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.diva);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.diva.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -254,8 +263,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.diva.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
     // Isla Style
-    OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.isla);
-    OrgChart.templates.dynamic.size = [320, 240];
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.isla);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.isla.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -265,7 +275,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.isla.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
-    const chart = new OrgChart(chartContainerRef.current, {
+  const chart = new OrgChart(chartContainerRef.current, {
       nodes,
       nodeBinding: {
         field_0: "name",
@@ -278,8 +288,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       nodeMouseClick: OrgChart.none,
       nodeMouseDbClick: OrgChart.none,
       enableSearch: false,
-      spacing: 100,
-      levelSeparation: 100,
+  // increase spacing so larger nodes don't overlap
+  spacing: 140,
+  levelSeparation: 140,
       nodeMenu: null,
       editForm: { readOnly: true },
       collapse: { level: 9999 }
@@ -315,78 +326,37 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       });
     }
   // colorNodes helper is defined at component scope; call it after creation
-
+  chartRef.current = chart;
   chartInstanceRef.current = chart;
   // color initial nodes (delay to allow internal rendering)
   setTimeout(() => { colorNodes(chart, data); addStatusBadges(chart, data); }, 300);
     return () => chart.destroy();
   }, [data, originalData, setSelectedEmployee, selectedTemplate, effectiveSelected.nameField, effectiveSelected.extras, department, headers, mapRowToNode]);
+  
   const handleExportImage = async () => {
     if (!chartContainerRef.current) return;
 
-    // Safely get config nodes
-    const cfgNodes = chartInstanceRef.current && chartInstanceRef.current.config && chartInstanceRef.current.config.nodes ? chartInstanceRef.current.config.nodes : [];
+    // preload images with decode
+    const imgs = chartContainerRef.current.querySelectorAll('img');
+    await Promise.all(
+      Array.from(imgs).map(img => {
+        if (img.complete) return img.decode?.().catch(() => {});
+        return new Promise(res => { img.onload = img.onerror = res; });
+      })
+    );
 
-    try {
-      // 1) Preload all unique image URLs referenced by nodes (this covers original URLs)
-      const urls = Array.from(new Set(cfgNodes.map(n => n && n.img).filter(Boolean)));
-      await Promise.all(urls.map(u => new Promise(res => {
-        try {
-          const im = new Image();
-          // request anonymous CORS where possible
-          try { im.crossOrigin = 'anonymous'; } catch(e) {}
-          im.onload = () => res();
-          im.onerror = () => res();
-          im.src = u;
-        } catch (e) { res(); }
-      })));
+    html2canvas(chartContainerRef.current, {
+      backgroundColor: "#ffffff", // solid background (prevents light export)
+      scale: 2,                   // higher resolution
+      useCORS: true,              // fixes image loading in Netlify
+    })
 
-      // 2) Ensure each rendered node element uses the node image.
-      // Some templates render <img>, others use background-image on a div.
-      cfgNodes.forEach(n => {
-        try {
-          let nodeEl = null;
-          if (chartInstanceRef.current && typeof chartInstanceRef.current.getNodeElement === 'function') nodeEl = chartInstanceRef.current.getNodeElement(n.id);
-          if (!nodeEl && chartContainerRef.current) {
-            nodeEl = chartContainerRef.current.querySelector(`[data-id="${n.id}"]`) || chartContainerRef.current.querySelector(`#${n.id}`) || chartContainerRef.current.querySelector(`[data-n-id="${n.id}"]`);
-          }
-          if (!nodeEl) return;
-
-          // 2a) If template includes an <img>, set its src
-          const imgEl = nodeEl.querySelector && nodeEl.querySelector('img');
-          if (imgEl && n.img) {
-            try { imgEl.crossOrigin = 'anonymous'; } catch(e) {}
-            if (imgEl.src !== n.img) imgEl.src = n.img;
-            return;
-          }
-
-          // 2b) Otherwise set background-image on likely photo containers
-          if (n.img) {
-            const photoCandidate = nodeEl.querySelector && (nodeEl.querySelector('.boc-photo') || nodeEl.querySelector('.photo') || nodeEl.querySelector('.node-photo') || nodeEl.querySelector('.boc-node') || nodeEl);
-            try {
-              if (photoCandidate && photoCandidate.style) {
-                photoCandidate.style.backgroundImage = `url("${n.img}")`;
-                photoCandidate.style.backgroundSize = 'cover';
-                photoCandidate.style.backgroundPosition = 'center center';
-              }
-            } catch(e) { }
-          }
-        } catch (e) { /* non-fatal per-node */ }
-      });
-
-    } catch (e) {
-      // non-fatal; continue to attempt export even if image preloading or DOM updates failed
-    }
-
-    // give browser a short moment to apply image updates
-    await new Promise(res => setTimeout(res, 200));
-
-    // Finally render to canvas and download
     const canvas = await html2canvas(chartContainerRef.current, {
       scale: 2,
       backgroundColor: '#ffffff',
-      useCORS: true,
+      useCORS: true
     });
+    
     const imgData = canvas.toDataURL('image/png');
     const link = document.createElement('a');
     link.href = imgData;
@@ -394,11 +364,18 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     link.click();
   };
 
+
   // note: selectedTemplate is included in the effect deps so changing it will recreate the chart
   const handleRefresh = () => {
     setDisplayData(originalData);
     if (chartInstanceRef.current) {
-  chartInstanceRef.current.load(originalData.map(row => mapRowToNode(row)), () => {
+      chartInstanceRef.current.load(originalData.map(row => ({
+        id: row.ID,
+        pid: row["Parent ID"] || null,
+        name: row.First_Name,
+        title: row.Designation,
+        img: row.Photo
+      })), () => {
         colorNodes(chartInstanceRef.current, originalData);
     addStatusBadges(chartInstanceRef.current, originalData);
     chartInstanceRef.current.fit();
@@ -414,14 +391,23 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     setSearchQuery(query);
     if (!query) {
       // reload full chart
-  chartInstanceRef.current.load(originalData.map(row => mapRowToNode(row)));
+      chartInstanceRef.current.load(originalData.map(row => ({
+        id: row.ID,
+        pid: row["Parent ID"] || null,
+        name: row.First_Name,
+        title: row.Designation,
+        img: row.Photo
+      })));
       chartInstanceRef.current.fit();
       return;
     }
     // find first partial match
     const root = originalData.find(emp =>
-      emp.First_Name.toLowerCase().includes(query.toLowerCase())
+      (emp[effectiveSelected.nameField] || "")
+        .toLowerCase()
+        .includes(query.toLowerCase())
     );
+
     if (!root) return;
     // collect subtree recursively
     const collectSubtree = (id) => {
@@ -433,7 +419,11 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     };
     const subtreeNodes = [root, ...collectSubtree(root.ID)];
     chartInstanceRef.current.load(subtreeNodes.map(row => ({
-  ...mapRowToNode(row)
+      id: row.ID,
+      pid: row["Parent ID"] || null,
+      name: row.First_Name,
+      title: row.Designation,
+      img: row.Photo
     })), () => {
   colorNodes(chartInstanceRef.current, subtreeNodes);
   addStatusBadges(chartInstanceRef.current, subtreeNodes);

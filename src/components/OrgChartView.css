@@ -10,8 +10,8 @@
 .orgchart-view .header {
   background: linear-gradient(to right, #dfe9f3, #ffffff);
   text-align: center;
-  padding: 6px;               /* reduced */
-  font-size: 16px;            /* smaller heading */
+  padding: 6px;             
+  font-size: 16px;          
   font-weight: bold;
   color: #b30059;
   letter-spacing: 0.5px;
@@ -98,16 +98,27 @@
 
 /* Name text inside node */
 .orgchart .node .field_0 {
-  font-size: 22px !important;   /* increase font size */
-  font-weight: 600 !important;  /* bold */
-  fill: black !important;       /* text color */
+  font-size: 26px !important;   /* increased font size */
+  font-weight: 700 !important;  /* bolder */
+  fill: #ffffff !important;     /* white text */
+  color: #ffffff !important;
+  /* allow wrapping and keep text within node bounds */
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  max-width: 90% !important;
+  text-align: center !important;
 }
 
 /* Title text inside node */
 .orgchart .node .field_1 {
-  font-size: 18px !important;   /* increase font size */
-  font-weight: 500 !important;
-  fill: black !important;
+  font-size: 20px !important;   /* increased font size */
+  font-weight: 600 !important;
+  fill: #ffffff !important;     /* white text */
+  color: #ffffff !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  max-width: 90% !important;
+  text-align: center !important;
 }
 
 /* ================= PRINT STYLES ================= */
@@ -196,14 +207,68 @@
 /* Small status badge placed in node top-right */
 .orgchart .node .status-badge {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 12px;
-  height: 12px;
+  top: 8px;
+  right: 8px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  box-shadow: 0 0 2px rgba(0,0,0,0.25);
-  border: 2px solid #fff;
+  box-shadow: 0 0 3px rgba(0,0,0,0.35);
+  border: 2px solid rgba(255,255,255,0.9); /* keep visible on colored backgrounds */
   z-index: 9999;
   pointer-events: none; /* ignore clicks */
 }
 
+/* Stronger, template-agnostic overrides so some templates' blue/grey text becomes white */
+.orgchart .node,
+.orgchart .node *,
+.orgchart .node .boc-node,
+.orgchart .node .boc-node-content,
+.orgchart .node .boc-node-inner,
+.orgchart .node .node,
+.orgchart .node .chart-node {
+  color: #ffffff !important;
+}
+
+/* SVG text (templates that render text as <text> or <tspan>) */
+.orgchart .node text,
+.orgchart .node tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Fallback for any inline-styled spans/links inside nodes */
+.orgchart .node span,
+.orgchart .node a,
+.orgchart .node div {
+  color: #ffffff !important;
+}
+
+/* Extra aggressive overrides for templates that render SVG text or use foreignObject */
+/* Target the chart container id (common) and common template wrappers to ensure coverage */
+#orgChart text,
+#orgChart tspan,
+#orgChart svg text,
+#orgChart svg tspan,
+.orgchart svg text,
+.orgchart svg tspan,
+.boc-node text,
+.boc-node tspan,
+.boc-node *,
+.orgchart .node foreignObject *,
+.orgchart .node foreignObject body,
+.orgchart .node foreignObject div {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* Sometimes templates use <g> wrappers with inline styles; force color on descendants too */
+.orgchart .node g,
+.orgchart .node g * {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
