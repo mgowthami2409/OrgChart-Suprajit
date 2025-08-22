@@ -166,7 +166,7 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
             </li>
             <li>The Excel sheet must not contain any empty cells.</li>
             <li>
-              In the Organizational Chart, the <b>Name</b> field is mandatory
+              In the Organization Chart, the <b>Name</b> field is mandatory
               by default. If required, you may display up to two additional
               fields by selecting the checkboxes above the chart.
             </li>

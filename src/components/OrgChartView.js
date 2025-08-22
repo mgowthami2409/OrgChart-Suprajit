@@ -187,7 +187,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     // Olivia Style
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
   // increase node size so larger white text fits without overlapping
-  OrgChart.templates.dynamic.size = [420, 260];
+  OrgChart.templates.dynamic.size = [500, 260];
     OrgChart.templates.olivia.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
@@ -197,7 +197,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.olivia.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
-    // Belinda Style
+  // Belinda Style
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.belinda);
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [420, 260];
