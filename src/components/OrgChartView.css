@@ -213,7 +213,7 @@
 
     /* scale chart within border */
     max-width: 100% !important;
-    max-height: 100% !important;
+    max-height: 90% !important;
   }
 
    #orgChart .node text {
