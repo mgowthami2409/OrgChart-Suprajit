@@ -99,12 +99,13 @@
 /* Name text inside node */
 .orgchart .node .field_0 {
   font-size: 26px !important;   /* increased font size */
-  font-weight: 700 !important;  /* bolder */
+  /* font-weight: 100 !important; */
+    /* bolder */
   fill: #ffffff !important;     /* white text */
-  color: #ffffff !important;
+  /* color: #ffffff !important; */
   /* allow wrapping and keep text within node bounds */
-  white-space: normal !important;
-  word-wrap: break-word !important;
+  /* white-space: normal !important; */
+  /* word-wrap: break-word !important; */
   max-width: 90% !important;
   text-align: center !important;
 }
@@ -127,6 +128,7 @@
     size: auto;
     margin: 5mm;
     border: 2px solid black;
+    position: absolute;
   }
 
   body, html {
@@ -172,7 +174,7 @@
     font-size: 24px;
     font-weight: bold;
     color: #1e4489 !important;
-    font-family: 'Aptos', Calibri, sans-serif;
+    font-family: 'Aptos', 'Poppins', sans-serif;
     margin-top: 5px;
   }
   
@@ -180,7 +182,7 @@
     margin: auto !important;
     font-size: 24px;
     font-weight: bold;
-    font-family: 'Aptos', Calibri, sans-serif;
+    font-family: 'Aptos', 'Poppins', sans-serif;
     color: #1e4489 !important;
   }
 
@@ -215,19 +217,30 @@
   }
 
    #orgChart .node text {
-    font-size: 22pt !important;  /* smaller, but readable */
+    font-size: 18pt !important;  /* smaller, but readable */
+    font-family: 'Aptos', 'Poppins', sans-serif;
+    font-weight: lighter !important;
   } 
 
   /* Main name field (field_0) – largest */
   #orgChart .node .field_0 {
-    font-size: 22pt !important;
-    font-weight: bold;
+    font-size: 18pt !important;
+    font-weight: normal;
   }
 
   /* All other fields (field_1, field_2, field_3...) – smaller */
   #orgChart .node [class^="field_"]:not(.field_0) {
     font-size: 16pt !important;
     font-weight: normal;
+  }
+
+  .theme {
+    position: relative;
+  }
+
+  .theme .img {
+    height: 2px !important;
+    width: 2px !important;
   }
 
   svg {
@@ -265,7 +278,7 @@
 .orgchart .node tspan {
   fill: #ffffff !important;
   color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+  /* -webkit-text-fill-color: #ffffff !important; */
 }
 
 /* Fallback for any inline-styled spans/links inside nodes */
@@ -291,7 +304,7 @@
 .orgchart .node foreignObject div {
   fill: #ffffff !important;
   color: #ffffff !important;
-  stroke: #ffffff !important;
+  /* stroke: #ffffff !important; */
   -webkit-text-fill-color: #ffffff !important;
   opacity: 1 !important;
 }
@@ -303,3 +316,29 @@
   color: #ffffff !important;
   stroke: #ffffff !important;
 }
+
+/* .theme {
+  display :none;
+} */
+
+.theme {
+    border: 1px solid black !important;
+    padding: 1px !important;
+  }
+
+  .logo1 {
+    height: 8px !important;
+    width: 8px !important;
+  }
+
+  .themep {
+    font-size: 12px;
+  }
+  
+  .theme {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }

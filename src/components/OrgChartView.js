@@ -498,6 +498,11 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
           </div>        
         </div>
       </div>
+      <div className="theme">
+        <p class="themep"><img src="./Blue.png" alt ="Blue" class="logo1"></img> - refers to Active</p>&nbsp;
+        <p class="themep"><img src="./Orange.png" alt="Orange" class="logo1"></img> - refers to Vacant</p>
+        <p class="themep"><img src="./Red.png" alt="Red" class="logo1"></img> - refers to Notice</p>
+      </div>
     </>
   );
 }
