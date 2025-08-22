@@ -156,8 +156,41 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
           style={{ display: "none" }}
         />
       </div>
+      <div>
+        <h2 className="text-lg font-semibold mb-2">Instructions</h2>
+          <ol className="instructions">
+            <li>
+              When preparing your Excel sheet, ensure that all <b>mandatory
+              fields</b> (as specified in the template) are included. You may
+              add additional fields if needed.
+            </li>
+            <li>The Excel sheet must not contain any empty cells.</li>
+            <li>
+              In the Organizational Chart, the <b>Name</b> field is mandatory
+              by default. If required, you may display up to two additional
+              fields by selecting the checkboxes above the chart.
+            </li>
+            <li>
+              To <b>print</b> the chart, click the <b>Print</b> button. In the
+              print settings, adjust the scaling based on your chosen paper
+              size (e.g., A3 → 60, A4 → 45, A5 → 30).
+            </li>
+            <li>
+              To <b>export</b> the chart as an image, click the{" "}
+              <b>Export Image</b> button. The file will be saved in
+              <code>.png</code> format.
+            </li>
+            <li>
+              To save the chart as a <b>PDF</b>, click the <b>Print</b> button.
+              In the print settings, select <b>“Save as PDF”</b> as the
+              destination and adjust the scaling as needed.
+            </li>
+          </ol>
+      </div>
     </div>
   );
 }
 
 export default FileUploader;
+
+

@@ -454,3 +454,32 @@ input[type="file"] {
   color: green;
   font-weight: bold;
 }
+
+.instructions {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: #f9fafb; /* light gray background */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-left: 50px;
+  margin-right: 50px;
+  color: black;
+}
+
+.instructions h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.instructions ol {
+  margin-left: 50px;
+}
+
+.instructions li {
+  margin-bottom: 8px;
+  text-align: center;
+}
