@@ -1,5 +1,5 @@
 import React from "react";
-function Controls({ searchQuery, setSearchQuery, onRefresh, onBack, onPrint, onExportImage, toggleFullScreen, templates = [], onSelectTemplate, selectedTemplate }) {
+function Controls({ searchQuery, setSearchQuery, onRefresh, onBack, onPrint, onExportImage, toggleFullScreen, onLayoutChange, selectedLayout, templates = [], onSelectTemplate, selectedTemplate }) {
    return (
       <div className="top-bar">    {/* was controls */}
          {/* Template selection buttons */}
@@ -15,6 +15,25 @@ function Controls({ searchQuery, setSearchQuery, onRefresh, onBack, onPrint, onE
                ))}
             </div>
          )}
+
+         <div className="layout-controls">
+            <span>Layout: </span>
+            <select
+               value={selectedLayout}   // <-- controlled by state
+               id="layout-select"
+               onChange={(e) => onLayoutChange && onLayoutChange(e.target.value)}
+            >
+               <option value="normal">Normal</option>
+               <option value="mixed">Mixed</option>
+               <option value="tree">Tree</option>
+               <option value="treeLeft">Tree Left</option>
+               <option value="treeLeftOffset">Tree Left Offset</option>
+               <option value="treeRight">Tree Right</option>
+               <option value="treeRightOffset">Tree Right Offset</option>
+               <option value="grid">Grid</option>
+            </select>
+         </div>
+
          <input
             type="text"
             value={searchQuery}

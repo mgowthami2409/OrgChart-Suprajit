@@ -24,6 +24,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   ];
 
   const [selectedTemplate, setSelectedTemplate] = useState(templates[0].key);
+  const [layout, setLayout] = useState("mixed"); // default layout
   // local fallback for selected fields if parent doesn't provide setter
   const [localSelected, setLocalSelected] = useState({ nameField: 'First_Name', titleField: 'Designation', extras: [] });
   const [localDepartment, setLocalDepartment] = useState(department || '');
@@ -182,7 +183,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.ana.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
-    OrgChart.templates.ana.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+    OrgChart.templates.ana.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="3px" fill="none" d="{rounded}" />'; 
 
     // Olivia Style
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
@@ -195,7 +196,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.olivia.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
-    OrgChart.templates.olivia.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+    OrgChart.templates.olivia.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="3px" fill="none" d="{rounded}" />'; 
 
   // Belinda Style
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.belinda);
@@ -284,17 +285,19 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       },
       scaleInitial: OrgChart.match.width,
       template: selectedTemplate,
-      layout: OrgChart.mixed,
+      layout: OrgChart[layout],
       nodeMouseClick: OrgChart.none,
       nodeMouseDbClick: OrgChart.none,
       enableSearch: false,
-  // increase spacing so larger nodes don't overlap
-  spacing: 180,
-  levelSeparation: 180,
+      // increase spacing so larger nodes don't overlap
+      spacing: 180,
+      levelSeparation: 180,
       nodeMenu: null,
       editForm: { readOnly: true },
-      collapse: { level: 9999 }
+      collapse: { level: 9999 },
+      linkTemplate: `<path stroke-linejoin="round" stroke="#1e4489" stroke-width="3px" fill="none" d="{rounded}" />`
     });
+ 
     try {
       if (!chart.editUI) chart.editUI = {};
       // ensure content is an object (not null) so property reads are safe
@@ -320,6 +323,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
           const rowsToColor = (originalData || []).filter(r => visibleIds.includes(String(r.ID)));
           colorNodes(chart, rowsToColor);
           addStatusBadges(chart, rowsToColor);
+          // chart.fit();
         } catch (e) {
           // ignore
         }
@@ -331,8 +335,16 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // color initial nodes (delay to allow internal rendering)
   setTimeout(() => { colorNodes(chart, data); addStatusBadges(chart, data); }, 300);
     return () => chart.destroy();
-  }, [data, originalData, setSelectedEmployee, selectedTemplate, effectiveSelected.nameField, effectiveSelected.extras, department, headers, mapRowToNode]);
+  }, [data, originalData, setSelectedEmployee, selectedTemplate, layout, effectiveSelected.nameField, effectiveSelected.extras, department, headers, mapRowToNode]);
   
+  const handleLayoutChange = (newLayout) => {
+    setLayout(newLayout);
+    if (chartRef.current) {
+      chartRef.current.config.layout = OrgChart[newLayout];
+      chartRef.current.draw();
+    }
+  };
+
   const handleExportImage = async () => {
     if (!chartContainerRef.current) return;
 
@@ -472,16 +484,17 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
           // onExportPDF={handleExportPDF}     
           onExportImage={handleExportImage}
           toggleFullScreen={toggleFullScreen}
+          onLayoutChange={handleLayoutChange}   // function
+          selectedLayout={layout}               // current state value
         />
         <div className="orgchart-container">
-          <div className="field-selectors" style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '0px 8px' }}>
-            <label style={{ marginRight: 6 }}></label>
-            <span style={{ color: 'black', marginRight: 12 }}>Name is mandatory, You can upload or set Photo for each node in the details popup.<br/>
-              Click on a person to open the popup then click '+' icon to upload Photo of a person
+          <div className="field-selectors" style={{ display: 'flex', gap: 5, alignItems: 'center', padding: '5px 5px' }}>
+            <label style={{ marginRight: 6 }}>Before printing, click the Refresh button to ensure the chart fits properly on your screen.</label>
+            <span style={{ color: 'black', marginRight: 12 }}>Click on a person to open the popup then click '+' icon to upload Photo of a person
             </span>
 
-            <label style={{ marginRight: 6, marginLeft: 6 }}>Select up to 2 additional fields to show:</label>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 120, overflow: 'auto', padding: 6, border: '1px solid #ddd', borderRadius: 4 }}>
+            <label style={{ marginRight: 6, marginLeft: 6, fontSize: 12 }}>Select up to 2 additional fields to show:</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2, maxHeight: 100, width: 180, overflow: 'auto', fontSize: 14, padding: 2, border: '1px solid #ddd', borderRadius: 4}}>
               {/* render headers as checkboxes; exclude Photo/Designation/Name */}
               {(headers || [])
                 .filter(h => { 

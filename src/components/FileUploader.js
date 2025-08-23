@@ -176,6 +176,10 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
               size (e.g., A3 → 60, A4 → 45, A5 → 30).
             </li>
             <li>
+              Before printing, click the <b>Refresh</b> button to ensure the chart 
+              fits properly on your screen.
+            </li>
+            <li>
               To <b>export</b> the chart as an image, click the{" "}
               <b>Export Image</b> button. The file will be saved in
               <code>.png</code> format.
