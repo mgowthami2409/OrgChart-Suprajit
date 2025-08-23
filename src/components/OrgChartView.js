@@ -33,12 +33,12 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     const nameKey = effectiveSelected.nameField || 'First_Name';
     const extras = Array.isArray(effectiveSelected.extras) ? effectiveSelected.extras.slice(0, 2) : [];
     const extraParts = extras.map(k => row[k] || '').filter(Boolean);
-
+  
     return {
       id: row.ID,
       pid: row["Parent ID"] || null,
       name: row[nameKey] || '',
-      title: extraParts.join(' - '),
+      title: extraParts.join(' - '),   // only selected extras
       img: row.Photo,
       status: row.Status || row.status || ''
     };
@@ -369,16 +369,10 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   const handleRefresh = () => {
     setDisplayData(originalData);
     if (chartInstanceRef.current) {
-      chartInstanceRef.current.load(originalData.map(row => ({
-        id: row.ID,
-        pid: row["Parent ID"] || null,
-        name: row.First_Name,
-        title: row.Designation,
-        img: row.Photo
-      })), () => {
+      chartInstanceRef.current.load(originalData.map(mapRowToNode), () => {
         colorNodes(chartInstanceRef.current, originalData);
-    addStatusBadges(chartInstanceRef.current, originalData);
-    chartInstanceRef.current.fit();
+        addStatusBadges(chartInstanceRef.current, originalData);
+        chartInstanceRef.current.fit();
       });
     }
     setSearchQuery("");
@@ -391,13 +385,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     setSearchQuery(query);
     if (!query) {
       // reload full chart
-      chartInstanceRef.current.load(originalData.map(row => ({
-        id: row.ID,
-        pid: row["Parent ID"] || null,
-        name: row.First_Name,
-        title: row.Designation,
-        img: row.Photo
-      })));
+      chartInstanceRef.current.load(originalData.map(mapRowToNode));
       chartInstanceRef.current.fit();
       return;
     }
@@ -418,13 +406,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       ];
     };
     const subtreeNodes = [root, ...collectSubtree(root.ID)];
-    chartInstanceRef.current.load(subtreeNodes.map(row => ({
-      id: row.ID,
-      pid: row["Parent ID"] || null,
-      name: row.First_Name,
-      title: row.Designation,
-      img: row.Photo
-    })), () => {
+    chartInstanceRef.current.load(subtreeNodes.map(mapRowToNode), () => {
   colorNodes(chartInstanceRef.current, subtreeNodes);
   addStatusBadges(chartInstanceRef.current, subtreeNodes);
   chartInstanceRef.current.fit();
@@ -502,7 +484,10 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 120, overflow: 'auto', padding: 6, border: '1px solid #ddd', borderRadius: 4 }}>
               {/* render headers as checkboxes; exclude Photo/Designation/Name */}
               {(headers || [])
-                .filter(h => { const key = String(h).toLowerCase(); return key !== 'photo' && key !== 'image' && key !== 'designation' && key !== (effectiveSelected.nameField || 'first_name').toLowerCase(); })
+                .filter(h => { 
+                  const key = String(h).toLowerCase(); 
+                  return key !== 'photo' && key !== 'image' && key !== (effectiveSelected.nameField || 'first_name').toLowerCase(); 
+                })
                 .map(h => {
                   const checked = Array.isArray(effectiveSelected.extras) && effectiveSelected.extras.includes(h);
                   return (
