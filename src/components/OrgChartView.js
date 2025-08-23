@@ -282,15 +282,15 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
         field_1: "title",
         img_0: "img"
       },
-      scaleInitial: OrgChart.match.boundary,
+      scaleInitial: OrgChart.match.width,
       template: selectedTemplate,
       layout: OrgChart.mixed,
       nodeMouseClick: OrgChart.none,
       nodeMouseDbClick: OrgChart.none,
       enableSearch: false,
   // increase spacing so larger nodes don't overlap
-  spacing: 140,
-  levelSeparation: 140,
+  spacing: 180,
+  levelSeparation: 180,
       nodeMenu: null,
       editForm: { readOnly: true },
       collapse: { level: 9999 }
