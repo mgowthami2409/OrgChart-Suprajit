@@ -78,7 +78,7 @@
 }
 
 .orgchart-view .top-bar .print {
-  background-color: #0099ff;
+  background-color: #5a2e9d;
 }
 
 .orgchart-view .top-bar .export-img {
@@ -346,3 +346,21 @@
     text-align: center;
     justify-content: center;
   }
+
+  .fullscreen-btn {
+  /* position: absolute;
+  top: 10px;
+  right: 10px; */
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+.fullscreen-btn:hover {
+  background: #0056b3;
+}

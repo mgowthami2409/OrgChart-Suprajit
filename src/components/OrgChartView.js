@@ -448,6 +448,27 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       // ignore
     }
   };
+
+  const toggleFullScreen = () => {
+    const elem = document.getElementById("orgChart");
+
+    if (!document.fullscreenElement) {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) { // Firefox
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) { // Chrome, Safari
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { // IE/Edge
+        elem.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
   return (
     <>
       <div className="print-header" style={{ display: "none" }}>
@@ -468,6 +489,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
           selectedTemplate={selectedTemplate}
           // onExportPDF={handleExportPDF}     
           onExportImage={handleExportImage}
+          toggleFullScreen={toggleFullScreen}
         />
         <div className="orgchart-container">
           <div className="field-selectors" style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '0px 8px' }}>

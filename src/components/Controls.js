@@ -1,5 +1,5 @@
 import React from "react";
-function Controls({ searchQuery, setSearchQuery, onRefresh, onBack, onPrint, onExportImage, templates = [], onSelectTemplate, selectedTemplate }) {
+function Controls({ searchQuery, setSearchQuery, onRefresh, onBack, onPrint, onExportImage, toggleFullScreen, templates = [], onSelectTemplate, selectedTemplate }) {
    return (
       <div className="top-bar">    {/* was controls */}
          {/* Template selection buttons */}
@@ -26,7 +26,7 @@ function Controls({ searchQuery, setSearchQuery, onRefresh, onBack, onPrint, onE
          <button className="print" onClick={onPrint}>Print</button>
          {/* <button className="export-pdf" onClick={onExportPDF}>Export PDF</button> */}
          <button className="export-img" onClick={onExportImage}>Export Image</button>
-
+         <button onClick={toggleFullScreen} className="fullscreen-btn">Toggle Fullscreen</button>
       </div>
    );
 }
