@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import OrgChart from "@balkangraph/orgchart.js";
 import Controls from "./Controls";
 import "./OrgChartView.css";
@@ -7,6 +7,7 @@ import html2canvas from 'html2canvas';
 
 function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee, onBackToUpload, headers = [], selectedFields = { nameField: 'First_Name', titleField: 'Designation' }, setSelectedFields, department = '' }) {
   const chartContainerRef = useRef(null);
+  const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const exportRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,19 +25,35 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
 
   const [selectedTemplate, setSelectedTemplate] = useState(templates[0].key);
   // local fallback for selected fields if parent doesn't provide setter
-  const [localSelected, setLocalSelected] = useState({ nameField: 'First_Name', titleField: 'Designation' });
+  const [localSelected, setLocalSelected] = useState({ nameField: 'First_Name', titleField: 'Designation', extras: [] });
   const [localDepartment, setLocalDepartment] = useState(department || '');
-  const effectiveSelected = (selectedFields && setSelectedFields) ? selectedFields : localSelected;
+  const effectiveSelected = (selectedFields && setSelectedFields) ? ({ ...selectedFields, extras: selectedFields.extras || [] }) : localSelected;
+  // map a data row to a chart node object using only name and up to 2 extras for title
+  const mapRowToNode = useCallback((row) => {
+    const nameKey = effectiveSelected.nameField || 'First_Name';
+    const extras = Array.isArray(effectiveSelected.extras) ? effectiveSelected.extras.slice(0, 2) : [];
+    const extraParts = extras.map(k => row[k] || '').filter(Boolean);
+  
+    return {
+      id: row.ID,
+      pid: row["Parent ID"] || null,
+      name: row[nameKey] || '',
+      title: extraParts.join(' - '),   // only selected extras
+      img: row.Photo,
+      status: row.Status || row.status || ''
+    };
+  }, [effectiveSelected.nameField, effectiveSelected.extras]);
+
   // Helper: color nodes based on Status column values
   const colorNodes = (chartObj, rows) => {
     if (!chartObj || !rows || !Array.isArray(rows)) return;
     const getColorForStatus = (status) => {
-      if (!status) return null;
+      if (!status) return "e0e0e0";
       const s = String(status).toLowerCase();
       if (s.includes("active")) return "#1e4489"; 
       if (s.includes("notice")) return "#bd2331"; 
       if (s.includes("vacant") || s.includes("vacency")) return "#ef6724"; 
-      return null; // leave default
+      return "#e0e0e0"; // leave default
     };
     try {
       for (const r of rows) {
@@ -83,9 +100,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     const getColorForStatus = (status) => {
       if (!status) return null;
       const s = String(status).toLowerCase();
-      if (s.includes("active")) return "#2ecc71"; // green
-      if (s.includes("notice")) return "#f1c40f"; // yellow
-      if (s.includes("vacant") || s.includes("vacency")) return "#e74c3c"; // red
+      if (s.includes("active")) return "#1e4489"; 
+      if (s.includes("notice")) return "#bd2331"; 
+      if (s.includes("vacant") || s.includes("vacency")) return "#e74c3c";
       return null;
     };
     try {
@@ -151,46 +168,133 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       setLocalDepartment(department);
     }
 
-    if (!data || data.length === 0 || !chartContainerRef.current) return;
-    const nodes = data.map(row => ({
-      id: row.ID,
-      pid: row["Parent ID"] || null,
-      name: row[effectiveSelected.nameField] || '',
-      title: row[effectiveSelected.titleField] || '',
-      img: row.Photo
-      // img: row.Photo ? `${window.location.origin}/photos/${row.Photo}` : '/placeholder.png'
+  if (!data || data.length === 0 || !chartContainerRef.current) return;
+  const nodes = data.map(row => mapRowToNode(row));
 
-    }));
-    const chart = new OrgChart(chartContainerRef.current, {
+    // Ana Style
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.ana);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
+    OrgChart.templates.ana.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.ana.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.ana.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Olivia Style
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [500, 260];
+    OrgChart.templates.olivia.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.olivia.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.olivia.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+  // Belinda Style
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.belinda);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
+    OrgChart.templates.belinda.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.belinda.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.belinda.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Rony Style
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.rony);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
+    OrgChart.templates.rony.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.rony.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.rony.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+  
+    // Mery Style
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.mery);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
+    OrgChart.templates.mery.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.mery.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.mery.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Polina Style
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.polina);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
+    OrgChart.templates.polina.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.polina.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.polina.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Diva Style
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.diva);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
+    OrgChart.templates.diva.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.diva.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.diva.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    // Isla Style
+  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.isla);
+  // increase node size so larger white text fits without overlapping
+  OrgChart.templates.dynamic.size = [420, 260];
+    OrgChart.templates.isla.plus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
+      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.isla.minus =
+      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+    OrgChart.templates.isla.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+  const chart = new OrgChart(chartContainerRef.current, {
       nodes,
       nodeBinding: {
         field_0: "name",
         field_1: "title",
         img_0: "img"
       },
-  scaleInitial: OrgChart.match.boundary,
-  template: selectedTemplate,
-  layout: OrgChart.mixed,
-  // Disable the library's built-in details/edit UI on node click so
-  // we don't get the right-side details panel. We use our own
-  // click handler (chart.on("click", ...)) to show the popup.
+      scaleInitial: OrgChart.match.boundary,
+      template: selectedTemplate,
+      layout: OrgChart.mixed,
       nodeMouseClick: OrgChart.none,
       nodeMouseDbClick: OrgChart.none,
       enableSearch: false,
-      spacing: 100,
-      levelSeparation: 100,
+  // increase spacing so larger nodes don't overlap
+  spacing: 140,
+  levelSeparation: 140,
       nodeMenu: null,
-  // provide a safe, read-only editForm object so the library
-  // doesn't try to access properties on `null` and crash.
       editForm: { readOnly: true },
       collapse: { level: 9999 }
     });
-    // Defensive: some versions of @balkangraph/orgchart.js try to open
-    // an edit UI when a node is clicked and assume editUI.content is an
-    // element (not null). In some runtime situations that value is null
-    // which causes "Cannot read properties of null (reading 'readOnly')".
-    // Patch the instance with a safe stub so the library's edit UI calls
-    // won't crash the app. This keeps the chart read-only in our UI.
     try {
       if (!chart.editUI) chart.editUI = {};
       // ensure content is an object (not null) so property reads are safe
@@ -222,24 +326,13 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       });
     }
   // colorNodes helper is defined at component scope; call it after creation
-
+  chartRef.current = chart;
   chartInstanceRef.current = chart;
   // color initial nodes (delay to allow internal rendering)
   setTimeout(() => { colorNodes(chart, data); addStatusBadges(chart, data); }, 300);
     return () => chart.destroy();
-  }, [data, originalData, setSelectedEmployee, selectedTemplate, effectiveSelected.nameField, effectiveSelected.titleField, department, headers]);
-
-  // const handleExportPDF = async () => {
-  //   if (!chartContainerRef.current) return;
-
-  //   const canvas = await html2canvas(chartContainerRef.current, { scale: 2 });
-  //   const imgData = canvas.toDataURL('image/png');
-
-  //   const pdf = new jsPDF('l', 'pt', [canvas.width, canvas.height]);
-  //   pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-  //   pdf.save('orgchart.pdf');
-  // };
-
+  }, [data, originalData, setSelectedEmployee, selectedTemplate, effectiveSelected.nameField, effectiveSelected.extras, department, headers, mapRowToNode]);
+  
   const handleExportImage = async () => {
     if (!chartContainerRef.current) return;
 
@@ -271,20 +364,15 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     link.click();
   };
 
+
   // note: selectedTemplate is included in the effect deps so changing it will recreate the chart
   const handleRefresh = () => {
     setDisplayData(originalData);
     if (chartInstanceRef.current) {
-      chartInstanceRef.current.load(originalData.map(row => ({
-        id: row.ID,
-        pid: row["Parent ID"] || null,
-        name: row.First_Name,
-        title: row.Designation,
-        img: row.Photo
-      })), () => {
+      chartInstanceRef.current.load(originalData.map(mapRowToNode), () => {
         colorNodes(chartInstanceRef.current, originalData);
-    addStatusBadges(chartInstanceRef.current, originalData);
-    chartInstanceRef.current.fit();
+        addStatusBadges(chartInstanceRef.current, originalData);
+        chartInstanceRef.current.fit();
       });
     }
     setSearchQuery("");
@@ -297,20 +385,17 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     setSearchQuery(query);
     if (!query) {
       // reload full chart
-      chartInstanceRef.current.load(originalData.map(row => ({
-        id: row.ID,
-        pid: row["Parent ID"] || null,
-        name: row.First_Name,
-        title: row.Designation,
-        img: row.Photo
-      })));
+      chartInstanceRef.current.load(originalData.map(mapRowToNode));
       chartInstanceRef.current.fit();
       return;
     }
     // find first partial match
     const root = originalData.find(emp =>
-      emp.First_Name.toLowerCase().includes(query.toLowerCase())
+      (emp[effectiveSelected.nameField] || "")
+        .toLowerCase()
+        .includes(query.toLowerCase())
     );
+
     if (!root) return;
     // collect subtree recursively
     const collectSubtree = (id) => {
@@ -321,23 +406,57 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       ];
     };
     const subtreeNodes = [root, ...collectSubtree(root.ID)];
-    chartInstanceRef.current.load(subtreeNodes.map(row => ({
-      id: row.ID,
-      pid: row["Parent ID"] || null,
-      name: row.First_Name,
-      title: row.Designation,
-      img: row.Photo
-    })), () => {
+    chartInstanceRef.current.load(subtreeNodes.map(mapRowToNode), () => {
   colorNodes(chartInstanceRef.current, subtreeNodes);
   addStatusBadges(chartInstanceRef.current, subtreeNodes);
   chartInstanceRef.current.fit();
     });
   };
+
+  // Toggle an extra field checkbox (limit to 2 selected extras)
+  const toggleExtra = (field) => {
+    try {
+      const curr = Array.isArray(effectiveSelected.extras) ? [...effectiveSelected.extras] : [];
+      let next = [];
+      if (curr.includes(field)) {
+        next = curr.filter(f => f !== field);
+      } else {
+        if (curr.length >= 2) return; // silently ignore beyond 2
+        next = [...curr, field];
+      }
+      const newVal = setSelectedFields ? ({ ...effectiveSelected, extras: next }) : ({ ...localSelected, extras: next });
+      if (setSelectedFields) setSelectedFields(newVal); else setLocalSelected(newVal);
+    } catch (e) {
+      // ignore
+    }
+  };
+
+  const toggleFullScreen = () => {
+    const elem = document.getElementById("orgChart");
+
+    if (!document.fullscreenElement) {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) { // Firefox
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) { // Chrome, Safari
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { // IE/Edge
+        elem.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
   return (
     <>
       <div className="print-header" style={{ display: "none" }}>
         <img src="/onlylogo.png" alt="Logo" />
         <h1>Suprajit</h1>
+        <span className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</span>
       </div>
       <div className="orgchart-view">
         <header className="header">SUPRAJIT ENGINEERING LIMITED</header>
@@ -352,25 +471,44 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
           selectedTemplate={selectedTemplate}
           // onExportPDF={handleExportPDF}     
           onExportImage={handleExportImage}
+          toggleFullScreen={toggleFullScreen}
         />
         <div className="orgchart-container">
-          <div className="field-selectors" style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '6px 8px' }}>
-            <label>Show Name from:</label>
-            <select value={effectiveSelected.nameField} onChange={e => (setSelectedFields ? setSelectedFields({ ...effectiveSelected, nameField: e.target.value }) : setLocalSelected({ ...effectiveSelected, nameField: e.target.value }))}>
-              {(headers || []).map(h => <option key={h} value={h}>{h}</option>)}
-            </select>
-            <label>Show Title from:</label>
-            <select value={effectiveSelected.titleField} onChange={e => (setSelectedFields ? setSelectedFields({ ...effectiveSelected, titleField: e.target.value }) : setLocalSelected({ ...effectiveSelected, titleField: e.target.value }))}>
-              {(headers || []).map(h => <option key={h} value={h}>{h}</option>)}
-            </select>
+          <div className="field-selectors" style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '0px 8px' }}>
+            <label style={{ marginRight: 6 }}></label>
+            <span style={{ color: 'black', marginRight: 12 }}>Name is mandatory, You can upload or set Photo for each node in the details popup.<br/>
+              Click on a person to open the popup then click '+' icon to upload Photo of a person
+            </span>
+
+            <label style={{ marginRight: 6, marginLeft: 6 }}>Select up to 2 additional fields to show:</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 120, overflow: 'auto', padding: 6, border: '1px solid #ddd', borderRadius: 4 }}>
+              {/* render headers as checkboxes; exclude Photo/Designation/Name */}
+              {(headers || [])
+                .filter(h => { 
+                  const key = String(h).toLowerCase(); 
+                  return key !== 'photo' && key !== 'image' && key !== (effectiveSelected.nameField || 'first_name').toLowerCase(); 
+                })
+                .map(h => {
+                  const checked = Array.isArray(effectiveSelected.extras) && effectiveSelected.extras.includes(h);
+                  return (
+                    <label key={h} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <input type="checkbox" checked={checked} onChange={() => toggleExtra(h)} />
+                      <span>{h}</span>
+                    </label>
+                  );
+                })}
+              <span style={{ color: '#666' }}></span>
+            </div>
           </div>
           <div className="print-label" ref={exportRef}>
               <div className={`chart-container template-${selectedTemplate}`} id="orgChart" ref={chartContainerRef}></div>
-              {/* print-only department label (rendered only in print via CSS) */}
-              <div className="print-department">{localDepartment ? `Department name: ${localDepartment}` : ''}</div>
-          </div>
-         
+          </div>        
         </div>
+      </div>
+      <div className="theme">
+        <p class="themep"><img src="./Blue.png" alt ="Blue" class="logo1"></img> - refers to Active</p>&nbsp;
+        <p class="themep"><img src="./Orange.png" alt="Orange" class="logo1"></img> - refers to Vacant</p>
+        <p class="themep"><img src="./Red.png" alt="Red" class="logo1"></img> - refers to Notice</p>
       </div>
     </>
   );
