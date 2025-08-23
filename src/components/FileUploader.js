@@ -50,15 +50,28 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
 
     const reader = new FileReader();
     reader.onload = (evt) => {
-      const data = new Uint8Array(evt.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
-      const sheetName = workbook.SheetNames[0];
-      const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { defval: "" });
-  setOriginalData(jsonData);
-  setDisplayData(jsonData);
-  // extract headers and pass them up so caller can present field selectors
-  const headerRow = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] || [];
-  if (setHeaders) setHeaders(headerRow.map(h => String(h)));
+        const data = new Uint8Array(evt.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { defval: "" });
+
+      // extract headers and pass them up so caller can present field selectors
+      const headerRow = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })[0] || [];
+
+      // Validate presence of mandatory field: Name (Photo can be uploaded per-node later)
+      const headersLower = headerRow.map(h => String(h).toLowerCase());
+      const possibleNameKeys = ['first_name','first name','name','full_name','fullname','employee name','employee_name','name'];
+
+      const hasName = headersLower.some(h => possibleNameKeys.includes(h));
+
+      if (!hasName) {
+        setError('Error: Uploaded file must include a Name column. Photo can be uploaded per node after import.');
+        return;
+      }
+
+      setOriginalData(jsonData);
+      setDisplayData(jsonData);
+      if (setHeaders) setHeaders(headerRow.map(h => String(h)));
       setError("");
       setSubmitted(true); // ✅ switch to new UI
     };
@@ -143,8 +156,45 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
           style={{ display: "none" }}
         />
       </div>
+      <div>
+        <h2 className="text-lg font-semibold mb-2">Instructions</h2>
+          <ol className="instructions">
+            <li>
+              When preparing your Excel sheet, ensure that all <b>mandatory
+              fields</b> (as specified in the template) are included. You may
+              add additional fields if needed.
+            </li>
+            <li>The Excel sheet must not contain any empty cells.</li>
+            <li>
+              In the Organization Chart, the <b>Name</b> field is mandatory
+              by default. If required, you may display up to two additional
+              fields by selecting the checkboxes above the chart.
+            </li>
+            <li>
+              To <b>print</b> the chart, click the <b>Print</b> button. In the
+              print settings, adjust the scaling based on your chosen paper
+              size (e.g., A3 → 60, A4 → 45, A5 → 30).
+            </li>
+            <li>
+              Before printing, click the <b>Refresh</b> button to ensure the chart 
+              fits properly on your screen.
+            </li>
+            <li>
+              To <b>export</b> the chart as an image, click the{" "}
+              <b>Export Image</b> button. The file will be saved in
+              <code>.png</code> format.
+            </li>
+            <li>
+              To save the chart as a <b>PDF</b>, click the <b>Print</b> button.
+              In the print settings, select <b>“Save as PDF”</b> as the
+              destination and adjust the scaling as needed.
+            </li>
+          </ol>
+      </div>
     </div>
   );
 }
 
 export default FileUploader;
+
+
