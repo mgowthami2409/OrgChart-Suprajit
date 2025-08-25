@@ -276,6 +276,12 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.isla.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
+    // force link style for all templates
+    const blueLink = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="3px" fill="none" d="{rounded}" />';
+
+    Object.keys(OrgChart.templates).forEach(tpl => {
+      OrgChart.templates[tpl].link = blueLink;
+    });
   const chart = new OrgChart(chartContainerRef.current, {
       nodes,
       nodeBinding: {
@@ -295,9 +301,13 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       nodeMenu: null,
       editForm: { readOnly: true },
       collapse: { level: 9999 },
-      linkTemplate: `<path stroke-linejoin="round" stroke="#1e4489" stroke-width="5px" fill="none" d="{rounded}" />`
+      linkType: "rounded",
+      // linkTemplate: `<path stroke-linejoin="round" stroke="#1e4489" stroke-width="5px" fill="none" d="{rounded}" />`
     });
- 
+
+    // const chart = chartRef.current;
+    chart.draw();
+
     try {
       if (!chart.editUI) chart.editUI = {};
       // ensure content is an object (not null) so property reads are safe
