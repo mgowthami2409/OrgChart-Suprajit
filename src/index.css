@@ -483,3 +483,43 @@ input[type="file"] {
   margin-bottom: 8px;
   text-align: center;
 }
+
+.photo-upload-section {
+  margin: 20px auto;
+  padding: 25px;
+  width: 60%;
+  max-width: 500px;
+  border: 2px dashed #4a90e2;
+  border-radius: 12px;
+  text-align: center;
+  background: #ffffffdd; /* semi-white background */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.photo-upload-section:hover {
+  border-color: #357abd;
+  background: #f8fbff;
+}
+
+.photo-upload-section p {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.photo-upload-section button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.photo-upload-section button:hover {
+  background-color: #357abd;
+}

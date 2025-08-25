@@ -408,7 +408,9 @@
   box-shadow: 0 0 4px rgba(0, 91, 187, 0.4);
 }
 
-.orgchart .link path {
-  stroke: #1e4489 !important;
-  stroke-width: 2 !important;
+/* Target link thickness for treeRightOffset and treeLeftOffset layouts */
+.custom-orgchart[data-layout="treeRightOffset"] .link path,
+.custom-orgchart[data-layout="treeLeftOffset"] .link path {
+    stroke-width: 5px !important; /* Adjust the value as needed */
 }
+

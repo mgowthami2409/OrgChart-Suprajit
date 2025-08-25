@@ -295,7 +295,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       nodeMenu: null,
       editForm: { readOnly: true },
       collapse: { level: 9999 },
-      linkTemplate: `<path stroke-linejoin="round" stroke="#1e4489" stroke-width="3px" fill="none" d="{rounded}" />`
+      linkTemplate: `<path stroke-linejoin="round" stroke="#1e4489" stroke-width="5px" fill="none" d="{rounded}" />`
     });
  
     try {
