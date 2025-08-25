@@ -35,6 +35,14 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
     }
   };
 
+  const handleClearPhotos = () => {
+    setImages({}); // clear uploaded photo map
+    setPhotoFolderLabel("No folder chosen"); // reset label
+    if (photoInputRef.current) {
+      photoInputRef.current.value = ""; // clear file input
+    }
+  };
+
   // 📌 When Excel file is selected
   const handleFileSelected = (event) => {
     const file = event.target.files[0];
@@ -242,9 +250,14 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
 
       <div className="photo-upload-section">
         <p>Upload Photos Folder (optional)</p>
+
         <button type="button" onClick={handleChoosePhotos}>
           Choose Folder
         </button>
+        <button type="button" onClick={handleClearPhotos} className="clear-btn">
+          Clear
+        </button>
+
         <input
           type="file"
           ref={photoInputRef}
@@ -256,12 +269,13 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
           accept="image/*"
         />
         <br/>
-        {/* 📌 Show chosen folder / message */}
-        <span className={`file-name ${photoFolderLabel.includes("No") ? "" : "success"}`}>
+        {/* Show chosen folder / message */}
+        <span
+          className={`file-name ${photoFolderLabel.includes("No") ? "" : "success"}`}
+        >
           {photoFolderLabel}
         </span>
       </div>
-
 
       <div>
         <h2 className="text-lg font-semibold mb-2">Instructions</h2>
@@ -272,6 +286,12 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
               add additional fields if needed.
             </li>
             <li>The Excel sheet must not contain any empty cells.</li>
+            <li>
+              To automatically display photos in the chart without manual editing, upload the photos folder in the 
+              <strong>"Upload Photos Folder"</strong> section. 
+              Ensure that the photo file names exactly match
+              the names specified in the Excel sheet.
+            </li>
             <li>
               In the Organization Chart, the <b>Name</b> field is mandatory
               by default. If required, you may display up to two additional

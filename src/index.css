@@ -429,12 +429,12 @@ input[type="file"] {
 }
 
 .upload-section button:last-of-type {
-  background-color: #bd2331;
+  background-color: #ef6724;
   color: white;
 }
 
 .upload-section button:last-of-type:hover {
-  background-color: #f20e21;
+  background-color: #bc4307;
 }
 
 .file-name {
@@ -459,7 +459,7 @@ input[type="file"] {
   margin-top: 20px;
   padding: 16px 20px;
   background: #f9fafb; /* light gray background */
-  border: 1px solid #ddd;
+  border: 5px solid white;
   border-radius: 8px;
   font-size: 14px;
   line-height: 1.6;
@@ -477,6 +477,7 @@ input[type="file"] {
 
 .instructions ol {
   margin-left: 50px;
+  padding: 10px;
 }
 
 .instructions li {
@@ -486,10 +487,10 @@ input[type="file"] {
 
 .photo-upload-section {
   margin: 20px auto;
-  padding: 25px;
+  padding: 15px;
   width: 60%;
-  max-width: 500px;
-  border: 2px dashed #4a90e2;
+  max-width: 400px;
+  border: 2px dashed #606060;
   border-radius: 12px;
   text-align: center;
   background: #ffffffdd; /* semi-white background */
@@ -506,7 +507,7 @@ input[type="file"] {
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 12px;
-  color: #333;
+  color: black;
 }
 
 .photo-upload-section button {
@@ -528,10 +529,35 @@ input[type="file"] {
   margin-top: 8px;
   display: inline-block;
   font-size: 14px;
-  color: #333;
+  color: black;
   font-weight: 500;
 }
 .file-name.success {
   color: green;
   font-weight: bold;
+}
+
+.photo-upload-section button {
+  margin: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  background: #5a2e9d;
+  color: white;
+}
+
+.photo-upload-section button:hover {
+  background: rgb(6, 65, 123);
+}
+
+.photo-upload-section .clear-btn {
+  background: #ef6724;
+  color: white;
+}
+
+.photo-upload-section .clear-btn:hover {
+  background: #bc4307;
 }
