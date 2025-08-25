@@ -9,6 +9,8 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [images, setImages] = useState({});
+  const [photoFolderLabel, setPhotoFolderLabel] = useState("No folder chosen");
+
 
   // normalize filenames (basename, lowercase)
   const normalize = (p) => {
@@ -62,12 +64,22 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
     const files = e.target.files;
     const imgMap = {};
 
+    if (files.length === 0) {
+      setPhotoFolderLabel("No folder chosen");
+      return;
+    }
+
     Array.from(files).forEach(file => {
       const url = URL.createObjectURL(file);
-      imgMap[normalize(file.name)] = url; // normalized for matching Excel Photo column
+      imgMap[normalize(file.name)] = url;
     });
 
     setImages(prev => ({ ...prev, ...imgMap }));
+
+    // 📌 Show folder name or number of photos
+    const firstFilePath = files[0].webkitRelativePath || files[0].name;
+    const folderName = firstFilePath.split("/")[0];
+    setPhotoFolderLabel(`${folderName} (${files.length} photos)`);
   };
 
   // 📌 Process Excel + match Photos
@@ -211,13 +223,13 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
         <button onClick={handleClear}>Clear</button>
         <br />
 
-        <label style={{ marginTop: 8 }}><b>Department Name: </b></label>
-        <input type="text" onChange={e => setDepartment && setDepartment(e.target.value)} style={{ marginLeft: 6 }} />
-        <br />
-
         <span className={`file-name ${error ? "error" : fileName ? "success" : ""}`}>
           {error ? error : (fileName ? fileName : "No file chosen")}
         </span>
+        <br/><br/>
+
+        <label style={{ marginTop: 8 }}><b>Department Name: </b></label>
+        <input type="text" onChange={e => setDepartment && setDepartment(e.target.value)} style={{ marginLeft: 6 }} />
 
         {/* Hidden Excel input */}
         <input
@@ -243,7 +255,13 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
           multiple
           accept="image/*"
         />
+        <br/>
+        {/* 📌 Show chosen folder / message */}
+        <span className={`file-name ${photoFolderLabel.includes("No") ? "" : "success"}`}>
+          {photoFolderLabel}
+        </span>
       </div>
+
 
       <div>
         <h2 className="text-lg font-semibold mb-2">Instructions</h2>
