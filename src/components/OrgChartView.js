@@ -123,6 +123,19 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     }
   };
   useEffect(() => {
+      // count all descendants recursively
+      const getSubtreeCount = (chart, nodeId) => {
+        const node = chart.get(nodeId);
+        if (!node || !node.childrenIds) return 0;
+
+        let count = 0;
+        for (const childId of node.childrenIds) {
+          count += 1; // ✅ count this child
+          count += getSubtreeCount(chart, childId); // ✅ count its descendants
+        }
+        return count;
+      };
+      
     // derive department from uploaded data if not explicitly provided
     if (!department) {
       try {
@@ -162,39 +175,36 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.ana);
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [420, 260];
-    OrgChart.templates.ana.plus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
-      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
-    OrgChart.templates.ana.minus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+  OrgChart.templates.ana.plus =
+    '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 22px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+  OrgChart.templates.ana.minus =
+    '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.ana.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="3px" fill="none" d="{rounded}" />'; 
 
     // Olivia Style
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [500, 260];
-    OrgChart.templates.olivia.plus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
-      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
-    OrgChart.templates.olivia.minus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+  OrgChart.templates.olivia.plus =
+    '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+  OrgChart.templates.olivia.minus =
+    '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.olivia.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="3px" fill="none" d="{rounded}" />'; 
 
   // Belinda Style
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.belinda);
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [420, 260];
-    OrgChart.templates.belinda.plus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
-      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
-    OrgChart.templates.belinda.minus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
+  OrgChart.templates.belinda.plus =
+    '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+  OrgChart.templates.belinda.minus =
+    '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.belinda.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
     // Rony Style
@@ -203,8 +213,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.rony.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
-      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
     OrgChart.templates.rony.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -216,8 +225,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.mery.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
-      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
     OrgChart.templates.mery.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -229,8 +237,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.polina.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
-      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
     OrgChart.templates.polina.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -242,8 +249,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.diva.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
-      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
     OrgChart.templates.diva.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -255,12 +261,23 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.isla.plus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-      '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>' +
-      '<line x1="15" y1="10" x2="15" y2="20" stroke="#000" stroke-width="2"></line>';
+    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
     OrgChart.templates.isla.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.isla.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+
+    const collapseMinus = `
+      <circle cx="15" cy="15" r="12" fill="orange" stroke="#000" stroke-width="1"></circle>
+      <line x1="10" y1="15" x2="20" y2="15" stroke="#fff" stroke-width="2"></line>
+    `;
+
+    ["ana","olivia","belinda","rony","mery","polina","diva","isla"].forEach(tpl => {
+      if (OrgChart.templates[tpl]) {
+        OrgChart.templates[tpl].minus = collapseMinus;
+        // leave plus as-is until user collapses
+      }
+    });
 
     // force link style for all templates
     const blueLink = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="3px" fill="none" d="{rounded}" />';
@@ -291,8 +308,60 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       // linkTemplate: `<path stroke-linejoin="round" stroke="#1e4489" stroke-width="5px" fill="none" d="{rounded}" />`
     });
 
+    // 🔧 Override nodesCounter to count ALL descendants
+    chart.config.nodesCounter = function (node) {
+      function countAllDescendants(n) {
+        let total = 0;
+        if (n.childrenIds && n.childrenIds.length > 0) {
+          n.childrenIds.forEach(childId => {
+            total += 1; // count this child
+            const childNode = chart.get(childId);
+            if (childNode) {
+              total += countAllDescendants(childNode); // count deeper
+            }
+          });
+        }
+        return total;
+      }
+      return countAllDescendants(node);
+    };
+
+    // ✅ Remove manual badge logic – OrgChart will now use nodesCounter for {collapsed-children-count}
+    chart.on("expcollclick", (sender, args) => {
+      // Just force a redraw so plus button updates with new count
+      setTimeout(() => {
+        sender.draw();
+      }, 20);
+    });
+
     // const chart = chartRef.current;
     chart.draw();
+
+    chart.on("expcollclick", (sender, args) => {
+      const nodeIdRaw = args?.node?.id ?? args?.id ?? args?.nodeId;
+      if (!nodeIdRaw) return;
+      const nodeId = String(nodeIdRaw);
+
+      setTimeout(() => {
+        const nodeEl = sender.getNodeElement(nodeId);
+        if (!nodeEl) return;
+
+        if (args.collapsing === true || args.state === OrgChart.COLLAPSING) {
+          const count = getSubtreeCount(sender, nodeId);  // ✅ use chart API
+          let badge = nodeEl.querySelector(".collapse-count");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "collapse-count";
+            nodeEl.appendChild(badge);
+          }
+          badge.textContent = String(count);
+          badge.style.display = "block";
+        } else {
+          const badge = nodeEl.querySelector(".collapse-count");
+          if (badge) badge.remove();
+        }
+      }, 30);
+    });
 
     // ✅ Define recolor ONCE here so everyone can use it
     const recolor = () => {
@@ -338,9 +407,6 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       chart.on("init", recolor);
       chart.on("redraw", recolor);
       chart.on("drop", recolor);
-      chart.on("expcollclick", () => {
-        setTimeout(recolor, 100); // longer delay so DOM is ready
-      });
     }
 
     // As extra safety, observe DOM mutations to recolor late-loaded nodes
