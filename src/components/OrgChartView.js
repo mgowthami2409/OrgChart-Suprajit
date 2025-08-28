@@ -48,51 +48,37 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // Helper: color nodes based on Status column values
   const colorNodes = (chartObj, rows) => {
     if (!chartObj || !rows || !Array.isArray(rows)) return;
+
     const getColorForStatus = (status) => {
-      if (!status) return "e0e0e0";
+      if (!status) return null;
       const s = String(status).toLowerCase();
-      if (s.includes("active")) return "#1e4489"; 
-      if (s.includes("notice")) return "#bd2331"; 
-      if (s.includes("vacant") || s.includes("vacency")) return "#ef6724"; 
-      return "#e0e0e0"; // leave default
+      if (s.includes("active")) return "#1e4489";
+      if (s.includes("notice")) return "#bd2331";
+      if (s.includes("vacant") || s.includes("vacency")) return "#ef6724";
+      return "#e0e0e0";
     };
-    try {
-      for (const r of rows) {
-        const id = (r.ID == null) ? null : String(r.ID);
-        const color = getColorForStatus(r.Status || r.status);
-        if (!color) continue;
-        // get element by API first, fall back to searching DOM by data-id
-        let el = null;
-        if (id && typeof chartObj.getNodeElement === "function") el = chartObj.getNodeElement(id);
-        if (!el && chartObj && chartObj.element) {
-          // attempt to find node wrapper by common attributes used by the lib
-          el = chartObj.element.querySelector(`[data-id="${id}"]`) || chartObj.element.querySelector(`#${id}`) || chartObj.element.querySelector(`[data-node-id="${id}"]`) || chartObj.element.querySelector(`[data-n-id="${id}"]`);
-        }
-        if (!el) continue;
-        // Try several selectors used by templates to apply visible color
-        const candidates = [];
-        try { candidates.push(el.querySelector && (el.querySelector('.boc-node') || el.querySelector('.boc-node-content') || el.querySelector('.boc-node-inner'))); } catch(e){ }
-        try { candidates.push(el.querySelector && el.querySelector('.node')); } catch(e){}
-        try { candidates.push(el.querySelector && el.querySelector('.chart-node')); } catch(e){}
-        // include the element itself last
-        candidates.push(el);
-        for (const target of candidates) {
-          if (!target || !target.style) continue;
-          // primary background
-          target.style.setProperty('background-color', color, 'important');
-          target.style.backgroundColor = color;
-          // for svg rects inside node templates, set fill
-          const rects = target.querySelectorAll ? target.querySelectorAll('rect') : [];
-          for (const rct of rects) {
-            try { rct.setAttribute('fill', color); } catch(e) {}
-          }
-          // for elements that use box-shadow or pseudo elements, also set borderColor where applicable
-          try { target.style.borderColor = color; } catch(e) {}
-        }
+
+    rows.forEach((r) => {
+      const id = String(r.ID || "");
+      const color = getColorForStatus(r.Status || r.status);
+      if (!id || !color) return;
+
+      let el = chartObj.getNodeElement?.(id);
+      if (!el && chartObj.element) {
+        el =
+          chartObj.element.querySelector(`[data-n-id="${id}"]`) ||
+          chartObj.element.querySelector(`[data-id="${id}"]`);
       }
-    } catch (e) {
-      // non-fatal
-    }
+      if (!el) return;
+
+      // For SVG templates
+      const rects = el.querySelectorAll("rect");
+      rects.forEach((rect) => rect.setAttribute("fill", color));
+
+      // For DIV-based templates
+      el.style.backgroundColor = color;
+      el.style.borderColor = color;
+    });
   };
 
   // Helper: inject a small status badge into each node (top-right)
@@ -308,6 +294,18 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     // const chart = chartRef.current;
     chart.draw();
 
+    // ✅ Define recolor ONCE here so everyone can use it
+    const recolor = () => {
+      const visibleIds = Array.isArray(chart.config?.nodes)
+        ? chart.config.nodes.map((n) => String(n.id))
+        : [];
+      const rowsToColor = (originalData || []).filter((r) =>
+        visibleIds.includes(String(r.ID))
+      );
+      colorNodes(chart, rowsToColor);
+      addStatusBadges(chart, rowsToColor);
+    };
+
     try {
       if (!chart.editUI) chart.editUI = {};
       // ensure content is an object (not null) so property reads are safe
@@ -325,26 +323,48 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       if (emp) setSelectedEmployee(emp);
     });
     // reapply colors after any internal redraw
-    if (typeof chart.on === 'function') {
-      chart.on('redraw', () => {
-        try {
-          // chart.config.nodes contains the currently rendered nodes (id, pid, ...)
-          const visibleIds = Array.isArray(chart.config && chart.config.nodes) ? chart.config.nodes.map(n => String(n.id)) : [];
-          const rowsToColor = (originalData || []).filter(r => visibleIds.includes(String(r.ID)));
-          colorNodes(chart, rowsToColor);
-          addStatusBadges(chart, rowsToColor);
-          // chart.fit();
-        } catch (e) {
-          // ignore
-        }
+    if (typeof chart.on === "function") {
+      const recolor = () => {
+        const visibleIds = Array.isArray(chart.config?.nodes)
+          ? chart.config.nodes.map((n) => String(n.id))
+          : [];
+        const rowsToColor = (originalData || []).filter((r) =>
+          visibleIds.includes(String(r.ID))
+        );
+        colorNodes(chart, rowsToColor);
+        addStatusBadges(chart, rowsToColor);
+      };
+
+      chart.on("init", recolor);
+      chart.on("redraw", recolor);
+      chart.on("drop", recolor);
+      chart.on("expcollclick", () => {
+        setTimeout(recolor, 100); // longer delay so DOM is ready
       });
     }
+
+    // As extra safety, observe DOM mutations to recolor late-loaded nodes
+    const observer = new MutationObserver(() => {
+      if (chartRef.current) {
+        recolor();
+      }
+    });
+    observer.observe(chartContainerRef.current, { childList: true, subtree: true });
+
+    // return () => {
+    //   chart.destroy();
+    //   observer.disconnect();
+    // };
+
   // colorNodes helper is defined at component scope; call it after creation
   chartRef.current = chart;
   chartInstanceRef.current = chart;
   // color initial nodes (delay to allow internal rendering)
   setTimeout(() => { colorNodes(chart, data); addStatusBadges(chart, data); }, 300);
-    return () => chart.destroy();
+    return () => {
+      chart.destroy();
+      observer.disconnect();
+    };
   }, [data, originalData, setSelectedEmployee, selectedTemplate, layout, effectiveSelected.nameField, effectiveSelected.extras, department, headers, mapRowToNode]);
   
   const handleLayoutChange = (newLayout) => {
