@@ -176,8 +176,10 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [420, 260];
   OrgChart.templates.ana.plus =
-    '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-    '<text text-anchor="middle" style="font-size: 22px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+  '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000 !important" x="15" y="22">{collapsed-children-total-count}</text>';
+    // '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    // '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
   OrgChart.templates.ana.minus =
     '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
     '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -188,8 +190,8 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [500, 260];
   OrgChart.templates.olivia.plus =
-    '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+    '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
   OrgChart.templates.olivia.minus =
     '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
     '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -200,8 +202,8 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [420, 260];
   OrgChart.templates.belinda.plus =
-    '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+    '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
   OrgChart.templates.belinda.minus =
     '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
     '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -212,8 +214,8 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.rony.plus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+      '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
     OrgChart.templates.rony.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -224,8 +226,8 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.mery.plus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+      '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
     OrgChart.templates.mery.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -236,8 +238,8 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.polina.plus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+      '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
     OrgChart.templates.polina.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -248,8 +250,8 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.diva.plus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+      '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
     OrgChart.templates.diva.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
@@ -260,20 +262,24 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
   // increase node size so larger white text fits without overlapping
   OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.isla.plus =
-      '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
-    '<text text-anchor="middle" style="font-size: 24px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-count}</text>';
+      '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+    '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
     OrgChart.templates.isla.minus =
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.isla.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
+    
     const collapseMinus = `
       <circle cx="15" cy="15" r="12" fill="orange" stroke="#000" stroke-width="1"></circle>
-      <line x1="10" y1="15" x2="20" y2="15" stroke="#fff" stroke-width="2"></line>
+      <line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>
     `;
 
     ["ana","olivia","belinda","rony","mery","polina","diva","isla"].forEach(tpl => {
       if (OrgChart.templates[tpl]) {
+        OrgChart.templates[tpl].plus =
+        '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
+        '<text text-anchor="middle" style="font-size:20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';  
         OrgChart.templates[tpl].minus = collapseMinus;
         // leave plus as-is until user collapses
       }
@@ -305,26 +311,35 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       editForm: { readOnly: true },
       collapse: { level: 9999 },
       linkType: "rounded",
-      // linkTemplate: `<path stroke-linejoin="round" stroke="#1e4489" stroke-width="5px" fill="none" d="{rounded}" />`
+      nodesCounter: function (node) {
+  function countDescendants(n) {
+    if (!n.children || n.children.length === 0) return 0;
+    let count = n.children.length;
+    n.children.forEach(child => {
+      count += countDescendants(child);
+    });
+    return count;
+  }
+
+  const total = countDescendants(node);
+
+  if (total > 0) {
+    // ✅ Safe: return HTML span/div, not raw SVG
+    return `<div style="background:#fff;border:1px solid #000;
+                     border-radius:50%;width:30px;height:30px;
+                     display:flex;align-items:center;justify-content:center;
+                     font-size:12px;">
+              ${total}
+            </div>`;
+  }
+  return "";
+}
+
     });
 
     // 🔧 Override nodesCounter to count ALL descendants
-    chart.config.nodesCounter = function (node) {
-      function countAllDescendants(n) {
-        let total = 0;
-        if (n.childrenIds && n.childrenIds.length > 0) {
-          n.childrenIds.forEach(childId => {
-            total += 1; // count this child
-            const childNode = chart.get(childId);
-            if (childNode) {
-              total += countAllDescendants(childNode); // count deeper
-            }
-          });
-        }
-        return total;
-      }
-      return countAllDescendants(node);
-    };
+    
+    
 
     // ✅ Remove manual badge logic – OrgChart will now use nodesCounter for {collapsed-children-count}
     chart.on("expcollclick", (sender, args) => {
