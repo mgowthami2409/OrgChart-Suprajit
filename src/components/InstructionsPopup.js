@@ -5,7 +5,7 @@ const InstructionsPopup = ({ onClose }) => {
     <div className="popup" onClick={onClose}>
       <div className="popup-content" onClick={(e) => e.stopPropagation()}>
         <span className="close" onClick={onClose}>&times;</span>
-        <h2>Instructions</h2>
+        <h2>INSTRUCTIONS</h2>
         <ol>
           <ol className="instructions">
             <li>
