@@ -193,6 +193,7 @@
   .orgchart-view .top-bar,
   .controls,
   .popup,
+  .instructions-popup,
   .upload-container {
     display: none !important;
   }
@@ -276,21 +277,6 @@
 .orgchart .node .boc-node-inner,
 .orgchart .node .node,
 .orgchart .node .chart-node {
-  color: #ffffff !important;
-}
-
-/* SVG text (templates that render text as <text> or <tspan>) */
-.orgchart .node text,
-.orgchart .node tspan {
-  fill: #ffffff !important;
-  color: #ffffff !important;
-  /* -webkit-text-fill-color: #ffffff !important; */
-}
-
-/* Fallback for any inline-styled spans/links inside nodes */
-.orgchart .node span,
-.orgchart .node a,
-.orgchart .node div {
   color: #ffffff !important;
 }
 
@@ -412,4 +398,40 @@
 .custom-orgchart[data-layout="treeRightOffset"] .link path,
 .custom-orgchart[data-layout="treeLeftOffset"] .link path {
     stroke-width: 5px !important; /* Adjust the value as needed */
+}
+
+/* Override collapse count text */
+.orgchart .boc-count {
+    fill: #000000 !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+.popup-content h2 {
+  margin-top: 0;
+  color: #1e4489;
+  text-align: center;
+}
+
+.popup-content ol {
+  margin-left: auto;
+  line-height: 1.6;
+}
+
+.popup-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  height: auto;
+  width: 800px;   /* 👈 this is limiting it */
+  text-align: center;
+  position: relative;
+  margin-right: auto;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+  transform: translateY(-30px);
+  animation: drop-in 0.4s ease forwards;
+}
+
+.instructions-popup {
+  text-align: center;
 }
