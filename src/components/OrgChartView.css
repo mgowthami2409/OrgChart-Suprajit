@@ -438,12 +438,6 @@
   width:200px;
 }
 
-/* #orgChart .node text {
-font-size: 22pt !important;  
-font-family: 'Aptos', 'Poppins', sans-serif;
-font-weight: lighter !important;
-} */
-
 /* Main name field (field_0) – largest */
 #orgChart .node .field_0 {
   font-size: 24pt !important;
