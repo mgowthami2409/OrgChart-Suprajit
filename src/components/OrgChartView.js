@@ -455,6 +455,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     if (chartRef.current) {
       chartRef.current.config.layout = OrgChart[newLayout];
       chartRef.current.draw();
+      chartRef.current.fit();
     }
   };
 

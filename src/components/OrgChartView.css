@@ -216,24 +216,26 @@
 
     /* scale chart within border */
     max-width: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
     max-height: 90% !important;
   }
 
    #orgChart .node text {
-    font-size: 18pt !important;  /* smaller, but readable */
+    font-size: 22pt !important;  /* smaller, but readable */
     font-family: 'Aptos', 'Poppins', sans-serif;
     font-weight: lighter !important;
   } 
 
   /* Main name field (field_0) – largest */
   #orgChart .node .field_0 {
-    font-size: 18pt !important;
+    font-size: 20pt !important;
     font-weight: normal;
   }
 
   /* All other fields (field_1, field_2, field_3...) – smaller */
   #orgChart .node [class^="field_"]:not(.field_0) {
-    font-size: 16pt !important;
+    font-size: 18pt !important;
     font-weight: normal;
   }
 
@@ -434,4 +436,10 @@
 .instructions-popup {
   text-align: center;
   width:200px;
+}
+
+#orgChart .node text {
+  font-size: 22pt !important;  /* smaller, but readable */
+  font-family: 'Aptos', 'Poppins', sans-serif;
+  font-weight: lighter !important;
 }
