@@ -3,6 +3,7 @@ import OrgChart from "@balkangraph/orgchart.js";
 import Controls from "./Controls";
 import "./OrgChartView.css";
 import html2canvas from 'html2canvas';
+import InstructionsPopup from "./InstructionsPopup"; 
 // import jsPDF from 'jspdf';
 
 function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee, onBackToUpload, headers = [], selectedFields = { nameField: 'First_Name', titleField: 'Designation' }, setSelectedFields, department = '' }) {
@@ -25,6 +26,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
 
   const [selectedTemplate, setSelectedTemplate] = useState(templates[0].key);
   const [layout, setLayout] = useState("mixed"); // default layout
+  const [showInstructions, setShowInstructions] = useState(false);
   // local fallback for selected fields if parent doesn't provide setter
   const [localSelected, setLocalSelected] = useState({ nameField: 'First_Name', titleField: 'Designation', extras: [] });
   const [localDepartment, setLocalDepartment] = useState(department || '');
@@ -598,13 +600,24 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
           onLayoutChange={handleLayoutChange}   // function
           selectedLayout={layout}               // current state value
         />
+
         <div className="orgchart-container">
-          <div className="field-selectors" style={{ display: 'flex', gap: 5, alignItems: 'center', padding: '5px 5px' }}>
-            <label style={{ marginRight: 6 }}>Before printing, click the Refresh button to ensure the chart fits properly on your screen.</label>
-            <span style={{ color: 'black', marginRight: 12 }}>Click on a person to open the popup then click '+' icon to upload Photo of a person
+          <div className="field-selectors" style={{ display: 'flex', gap: 3, alignItems: 'center', padding: '5px 5px' }}>
+            {/* Help Button (next to Controls or as separate bar) */}
+            <span className= "instructions-popup" style={{ textAlign: "center" }}>
+              <button
+                onClick={() => setShowInstructions(true)}
+                title="View Instructions"
+                style={{ fontSize: 14, cursor: "pointer" }}
+              >
+                ⓘ Instructions
+              </button>
+            </span>
+            <label style={{ marginRight: 4, fontSize: 14 }}>Before printing, click the Refresh button to ensure the chart fits properly on your screen.</label>
+            <span style={{ color: 'black', marginRight: 8, fontSize: 14 }}>Click on a person to open the popup then click '+' icon to upload Photo of a person
             </span>
 
-            <label style={{ marginRight: 6, marginLeft: 6, fontSize: 12 }}>Select up to 2 additional fields to show:</label>
+            <label style={{ marginRight: 4, marginLeft: 4, fontSize: 12 }}>Select up to 2 additional fields to show:</label>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2, maxHeight: 100, width: 180, overflow: 'auto', fontSize: 14, padding: 2, border: '1px solid #ddd', borderRadius: 4}}>
               {/* render headers as checkboxes; exclude Photo/Designation/Name */}
               {(headers || [])
@@ -634,6 +647,11 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
         <p class="themep"><img src="./Orange.png" alt="Orange" class="logo1"></img> - refers to Vacant</p>
         <p class="themep"><img src="./Red.png" alt="Red" class="logo1"></img> - refers to Notice</p>
       </div>
+
+       {/* Popup overlay at bottom so it floats above everything */}
+      {showInstructions && (
+        <InstructionsPopup onClose={() => setShowInstructions(false)} />
+      )}
     </>
   );
 }
