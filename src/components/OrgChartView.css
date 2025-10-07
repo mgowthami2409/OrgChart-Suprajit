@@ -423,7 +423,7 @@
   padding: 25px;
   border-radius: 12px;
   height: auto;
-  width: 800px;   /* 👈 this is limiting it */
+  width: 800px;
   text-align: center;
   position: relative;
   box-shadow: 0 10px 22px rgba(0,0,0,0.25);
