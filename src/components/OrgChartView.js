@@ -176,7 +176,7 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     // Ana Style
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.ana);
   // increase node size so larger white text fits without overlapping
-  OrgChart.templates.dynamic.size = [420, 260];
+  OrgChart.templates.dynamic.size = [500, 260];
   OrgChart.templates.ana.plus =
   '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
     '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000 !important" x="15" y="22">{collapsed-children-total-count}</text>';
