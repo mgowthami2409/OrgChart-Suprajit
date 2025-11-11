@@ -221,21 +221,21 @@
     max-height: 90% !important;
   }
 
-   #orgChart .node text {
-    font-size: 20pt !important; 
+   /* #orgChart .node text {
+    font-size: 14pt !important; 
     font-family: 'Aptos', 'Poppins', sans-serif;
-    font-weight: lighter !important;
-  } 
+    font-weight: bold !important;
+  }  */
 
   /* Main name field (field_0) – largest */
   #orgChart .node .field_0 {
-    font-size: 24pt !important;
-    font-weight: normal;
+    font-size: 14pt !important;
+    font-weight: bolder !important;
   }
 
   /* All other fields (field_1, field_2, field_3...) – smaller */
   #orgChart .node [class^="field_"]:not(.field_0) {
-    font-size: 20pt !important;
+    font-size: 10pt !important;
     font-weight: normal;
   }
 

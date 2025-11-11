@@ -10,8 +10,6 @@ body {
   text-align: center;
   overflow-x: hidden;
   transition: background 0.5s ease;
-  
-            /* opacity: 0.4; */
 }
 
 /* Add watermark */
@@ -535,6 +533,7 @@ input[type="file"] {
   color: black;
   font-weight: 500;
 }
+
 .file-name.success {
   color: green;
   font-weight: bold;
@@ -574,7 +573,7 @@ input[type="file"] {
   z-index: 2000;        /* above all content */
   transition: transform 0.3s ease;
   background-color: transparent;
-            opacity: 0.4;
+  opacity: 0.4;
 }
 
 .itlogo:hover {
