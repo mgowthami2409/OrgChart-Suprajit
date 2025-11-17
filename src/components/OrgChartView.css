@@ -316,31 +316,28 @@
 } */
 
 .theme {
-    border: 1px solid black !important;
-    padding: 1px !important;
-  }
+  border: 1px solid black !important;
+  padding: 1px !important;
+}
 
-  .logo1 {
-    height: 8px !important;
-    width: 8px !important;
-  }
+.logo1 {
+  height: 8px !important;
+  width: 8px !important;
+}
 
-  .themep {
-    font-size: 12px;
-  }
-  
-  .theme {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-  }
+.themep {
+  font-size: 12px;
+}
 
-  .fullscreen-btn {
-  /* position: absolute;
-  top: 10px;
-  right: 10px; */
+.theme {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.fullscreen-btn {
   background: #007bff;
   color: white;
   border: none;
