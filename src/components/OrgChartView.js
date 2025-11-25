@@ -189,9 +189,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.ana.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="3px" fill="none" d="{rounded}" />'; 
 
     // Olivia Style
-  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
+  // OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.olivia);
   // increase node size so larger white text fits without overlapping
-  OrgChart.templates.dynamic.size = [500, 260];
+  // OrgChart.templates.dynamic.size = [500, 260];
   OrgChart.templates.olivia.plus =
     '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
     '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
@@ -199,6 +199,14 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
     '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.olivia.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="3px" fill="none" d="{rounded}" />'; 
+    OrgChart.templates.olivia.field_0 =
+    '<text data-width="160" data-text-overflow="multiline-2" ' +
+    'x="170" y="50" text-anchor="middle" ' +
+    'style="font-size:16px;" fill="#ffffff">{val}</text>';
+    OrgChart.templates.olivia.field_1 =
+    '<text data-width="170" data-text-overflow="multiline-3" ' +
+    'x="170" y="90" text-anchor="middle" ' +
+    'style="font-size:12px;" fill="#ffffff">{val}</text>';
 
   // Belinda Style
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.belinda);
@@ -213,9 +221,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.belinda.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
     // Rony Style
-  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.rony);
+  // OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.rony);
   // increase node size so larger white text fits without overlapping
-  OrgChart.templates.dynamic.size = [420, 260];
+  // OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.rony.plus =
       '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
     '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
@@ -223,6 +231,14 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.rony.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+    OrgChart.templates.rony.field_0 =
+    '<text data-width="160" data-text-overflow="multiline-2" ' +
+    'x="90" y="40" text-anchor="middle" ' +
+    'style="font-size:16px;" fill="#ffffff">{val}</text>';
+    OrgChart.templates.rony.field_1 =
+    '<text data-width="170" data-text-overflow="multiline-3" ' +
+    'x="90" y="80" text-anchor="middle" ' +
+    'style="font-size:12px;" fill="#ffffff">{val}</text>';
   
     // Mery Style
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.mery);
@@ -237,9 +253,9 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     OrgChart.templates.mery.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
 
     // Polina Style
-  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.polina);
+  // OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.polina);
   // increase node size so larger white text fits without overlapping
-  OrgChart.templates.dynamic.size = [420, 260];
+  // OrgChart.templates.dynamic.size = [420, 260];
     OrgChart.templates.polina.plus =
       '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
     '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
@@ -247,6 +263,14 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.polina.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+    OrgChart.templates.polina.field_0 =
+    '<text data-width="200" data-text-overflow="multiline-2" ' +
+    'x="170" y="30" text-anchor="middle" ' +
+    'style="font-size:16px;" fill="#ffffff">{val}</text>';
+    OrgChart.templates.polina.field_1 =
+    '<text data-width="180" data-text-overflow="multiline-3" ' +
+    'x="170" y="50" text-anchor="middle" ' +
+    'style="font-size:12px;" fill="#ffffff">{val}</text>';
 
     // Diva Style
   OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.diva);
@@ -259,11 +283,21 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.diva.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+    OrgChart.templates.diva.field_0 =
+    '<text data-width="200" data-text-overflow="multiline-2" ' +
+    'x="90" y="120" text-anchor="middle" ' +
+    'style="font-size:16px;" fill="#ffffff">{val}</text>';
+    OrgChart.templates.diva.field_1 =
+    '<text data-width="200" data-text-overflow="multiline-3" ' +
+    'x="100" y="140" text-anchor="middle" ' +
+    'style="font-size:14px;" fill="#ffffff">{val}</text>';
+
 
     // Isla Style
-  OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.isla);
+  // OrgChart.templates.dynamic = Object.assign({}, OrgChart.templates.isla);
   // increase node size so larger white text fits without overlapping
-  OrgChart.templates.dynamic.size = [420, 260];
+  // OrgChart.templates.dynamic.size = [420, 260];
+  
     OrgChart.templates.isla.plus =
       '<circle cx="15" cy="15" r="15" fill="orange" stroke="#000" stroke-width="1"></circle>' +
     '<text text-anchor="middle" style="font-size: 20px;cursor:pointer;" fill="#000" x="15" y="22">{collapsed-children-total-count}</text>';
@@ -271,8 +305,15 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
       '<circle cx="15" cy="15" r="10" fill="orange" stroke="#000" stroke-width="1"></circle>' +
       '<line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>';
     OrgChart.templates.isla.link = '<path stroke-linejoin="round" stroke="#1e4489" stroke-width="2px" fill="none" d="{rounded}" />'; 
+    OrgChart.templates.isla.field_0 =
+      '<text data-width="200" data-text-overflow="multiline-2" ' +
+      'x="90" y="90" text-anchor="middle" ' +
+      'style="font-size:12px;" fill="#ffffff">{val}</text>';
+      OrgChart.templates.isla.field_1 =
+      '<text data-width="180" data-text-overflow="multiline-3" ' +
+      'x="95" y="50" text-anchor="middle" ' +
+      'style="font-size:10px;" fill="#ffffff">{val}</text>';
 
-    
     const collapseMinus = `
       <circle cx="15" cy="15" r="12" fill="orange" stroke="#000" stroke-width="1"></circle>
       <line x1="10" y1="15" x2="20" y2="15" stroke="#000" stroke-width="2"></line>
@@ -490,7 +531,6 @@ function OrgChartView({ data, originalData, setDisplayData, setSelectedEmployee,
     link.download = 'orgchart.png';
     link.click();
   };
-
 
   // note: selectedTemplate is included in the effect deps so changing it will recreate the chart
   const handleRefresh = () => {
