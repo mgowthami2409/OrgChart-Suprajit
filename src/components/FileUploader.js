@@ -209,116 +209,119 @@ function FileUploader({ setOriginalData, setDisplayData, setHeaders, setDepartme
 
   // 📌 Default Upload UI
   return (
-    <div className="app-container">
-      <header className="header">
-        <img src="/onlylogo.png" alt="Logo" className="logo" />
-        <h1>SUPRAJIT ENGINEERING LIMITED</h1>
-      </header>
+    <>
+      <div className="app-container">
+        <header className="header">
+          <img src="/onlylogo.png" alt="Logo" className="logo" />
+          <h1>SUPRAJIT ENGINEERING LIMITED</h1>
+        </header>
 
-      <h2 className="sub-header">ORGANIZATION CHART</h2>
+        <h2 className="sub-header">ORGANIZATION CHART</h2>
 
-      <div className="template-download">
-        <p>Download the <b>.xlsx</b> file template:</p>
-        <a href="/template.xlsx" download className="download-btn">
-          📥 Excel Template
-        </a>
+        <div className="template-download">
+          <p>Download the <b>.xlsx</b> file template:</p>
+          <a href="/template.xlsx" download className="download-btn">
+            📥 Excel Template
+          </a>
+        </div>
+
+        <div className="upload-section">
+          {/* Excel upload */}
+          <button onClick={handleChooseFile}>Choose Excel File</button>
+          <button onClick={handleSubmit}>Submit</button>
+          <button onClick={handleClear}>Clear</button>
+          <br />
+
+          <span className={`file-name ${error ? "error" : fileName ? "success" : ""}`}>
+            {error ? error : (fileName ? fileName : "No file chosen")}
+          </span>
+          <br/><br/>
+
+          <label style={{ marginTop: 8 }}><b>Department Name: </b></label>
+          <input type="text" onChange={e => setDepartment && setDepartment(e.target.value)} style={{ marginLeft: 6 }} />
+
+          {/* Hidden Excel input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileSelected}
+            style={{ display: "none" }}
+          />
+        </div>
+
+        <div className="photo-upload-section">
+          <p>Upload Photos Folder (optional)</p>
+
+          <button type="button" onClick={handleChoosePhotos}>
+            Choose Folder
+          </button>
+          <button type="button" onClick={handleClearPhotos} className="clear-btn">
+            Clear
+          </button>
+
+          <input
+            type="file"
+            ref={photoInputRef}
+            onChange={handlePhotoUpload}
+            style={{ display: "none" }}
+            webkitdirectory="true"
+            directory="true"
+            multiple
+            accept="image/*"
+          />
+          <br/>
+          {/* Show chosen folder / message */}
+          <span
+            className={`file-name ${photoFolderLabel.includes("No") ? "" : "success"}`}
+          >
+            {photoFolderLabel}
+          </span>
+        </div>
+
+        <div>
+          <h2 className="text-lg font-semibold mb-2">INSTRUCTIONS</h2>
+            <ol className="instructions">
+              <li>
+                When preparing your Excel sheet, ensure that all <b>mandatory
+                fields</b> (as specified in the template) are included. You may
+                add additional fields if needed.
+              </li>
+              <li>The Excel sheet must not contain any empty cells.</li>
+              <li>
+                To automatically display photos in the chart without manual editing, upload the photos folder in the 
+                <strong>"Upload Photos Folder"</strong> section. 
+                Ensure that the photo file names exactly match
+                the names specified in the Excel sheet.
+              </li>
+              <li>
+                In the Organization Chart, the <b>Name</b> field is mandatory
+                by default. If required, you may display up to two additional
+                fields by selecting the checkboxes above the chart.
+              </li>
+              <li>
+                To <b>print</b> the chart, click the <b>Print</b> button. In the
+                print settings, adjust the scaling based on your chosen paper
+                size (e.g., A3 → 60, A4 → 45, A5 → 30).
+              </li>
+              <li>
+                Before printing, click the <b>Refresh</b> button to ensure the chart 
+                fits properly on your screen.
+              </li>
+              <li>
+                To <b>export</b> the chart as an image, click the{" "}
+                <b>Export Image</b> button. The file will be saved in
+                <code>.png</code> format.
+              </li>
+              <li>
+                To save the chart as a <b>PDF</b>, click the <b>Print</b> button.
+                In the print settings, select <b>“Save as PDF”</b> as the
+                destination and adjust the scaling as needed.
+              </li>
+            </ol>
+        </div>
       </div>
-
-      <div className="upload-section">
-        {/* Excel upload */}
-        <button onClick={handleChooseFile}>Choose Excel File</button>
-        <button onClick={handleSubmit}>Submit</button>
-        <button onClick={handleClear}>Clear</button>
-        <br />
-
-        <span className={`file-name ${error ? "error" : fileName ? "success" : ""}`}>
-          {error ? error : (fileName ? fileName : "No file chosen")}
-        </span>
-        <br/><br/>
-
-        <label style={{ marginTop: 8 }}><b>Department Name: </b></label>
-        <input type="text" onChange={e => setDepartment && setDepartment(e.target.value)} style={{ marginLeft: 6 }} />
-
-        {/* Hidden Excel input */}
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileSelected}
-          style={{ display: "none" }}
-        />
-      </div>
-
-      <div className="photo-upload-section">
-        <p>Upload Photos Folder (optional)</p>
-
-        <button type="button" onClick={handleChoosePhotos}>
-          Choose Folder
-        </button>
-        <button type="button" onClick={handleClearPhotos} className="clear-btn">
-          Clear
-        </button>
-
-        <input
-          type="file"
-          ref={photoInputRef}
-          onChange={handlePhotoUpload}
-          style={{ display: "none" }}
-          webkitdirectory="true"
-          directory="true"
-          multiple
-          accept="image/*"
-        />
-        <br/>
-        {/* Show chosen folder / message */}
-        <span
-          className={`file-name ${photoFolderLabel.includes("No") ? "" : "success"}`}
-        >
-          {photoFolderLabel}
-        </span>
-      </div>
-
-      <div>
-        <h2 className="text-lg font-semibold mb-2">Instructions</h2>
-          <ol className="instructions">
-            <li>
-              When preparing your Excel sheet, ensure that all <b>mandatory
-              fields</b> (as specified in the template) are included. You may
-              add additional fields if needed.
-            </li>
-            <li>The Excel sheet must not contain any empty cells.</li>
-            <li>
-              To automatically display photos in the chart without manual editing, upload the photos folder in the 
-              <strong>"Upload Photos Folder"</strong> section. 
-              Ensure that the photo file names exactly match
-              the names specified in the Excel sheet.
-            </li>
-            <li>
-              In the Organization Chart, the <b>Name</b> field is mandatory
-              by default. If required, you may display up to two additional
-              fields by selecting the checkboxes above the chart.
-            </li>
-            <li>
-              To <b>print</b> the chart, click the <b>Print</b> button. In the
-              print settings, adjust the scaling based on your chosen paper
-              size (e.g., A3 → 60, A4 → 45, A5 → 30).
-            </li>
-            <li>
-              Before printing, click the <b>Refresh</b> button to ensure the chart 
-              fits properly on your screen.
-            </li>
-            <li>
-              To <b>export</b> the chart as an image, click the{" "}
-              <b>Export Image</b> button. The file will be saved in
-              <code>.png</code> format.
-            </li>
-            <li>
-              To save the chart as a <b>PDF</b>, click the <b>Print</b> button.
-              In the print settings, select <b>“Save as PDF”</b> as the
-              destination and adjust the scaling as needed.
-            </li>
-          </ol>
-      </div>
-    </div>
+      <img src="./itlogonobg.png" alt="IT Logo" className="itlogo" />
+    </>
   );
 }
 

@@ -4,11 +4,14 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  background: #3fabe0;
+  /* background: #3fabe0; */
+  background: #3faae0ab;
   color: #0b0b0b;
   text-align: center;
   overflow-x: hidden;
   transition: background 0.5s ease;
+  
+            /* opacity: 0.4; */
 }
 
 /* Add watermark */
@@ -247,7 +250,7 @@ input[type="file"] {
 .close {
   position: absolute;
   top: 8px;
-  right: 12px;
+  left: 12px;
   font-size: 24px;
   cursor: pointer;
   transition: color 0.3s;
@@ -357,9 +360,9 @@ input[type="file"] {
 
 .header h1 {
   font-size: 35px;
-  font-weight: bold;
+  font-weight: bolder;
   color: #1e4489;
-  text-shadow: 2px 2px 4px #000000;
+  /* text-shadow: 2px 2px 4px #000000; */
 }
 
 .sub-header {
@@ -560,4 +563,20 @@ input[type="file"] {
 
 .photo-upload-section .clear-btn:hover {
   background: #bc4307;
+}
+
+.itlogo {
+  position: fixed;      /* makes it float */
+  top: 180px;            /* distance from top */
+  left: 30px;          /* distance from right */
+  width: 200px;          /* adjust size */
+  height: auto;
+  z-index: 2000;        /* above all content */
+  transition: transform 0.3s ease;
+  background-color: transparent;
+            opacity: 0.4;
+}
+
+.itlogo:hover {
+  transform: scale(1.1);  /* small zoom on hover */
 }
